@@ -1,0 +1,9 @@
+.title {
+  color: #202018;
+  transition: color 350ms ease;
+}
+
+:global(.park-weather-night) ~ :global(.park-heading) .title,
+:global(.park-weather-christmas) ~ :global(.park-heading) .title {
+  color: #fff5df;
+}

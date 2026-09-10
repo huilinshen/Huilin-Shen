@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Home, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { BodyClockCaseStudy } from "@/components/projects/BodyClockCaseStudy";
 import { CalendarFlipbook } from "@/components/projects/CalendarFlipbook";
@@ -10,6 +10,7 @@ import { CaseStudySubAccordion } from "@/components/projects/CaseStudySubAccordi
 import { ResearchProcessAccordion } from "@/components/projects/ResearchProcessAccordion";
 import { InternshipProjectsCaseStudy } from "@/components/projects/InternshipProjectsCaseStudy";
 import { ProjectFooterNavigation } from "@/components/projects/ProjectFooterNavigation";
+import { GlobalNavigation } from "@/components/GlobalNavigation";
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -66,17 +67,8 @@ export default async function ProjectPage({
   if (isBodyClock) {
     return (
       <main className="min-h-screen overflow-x-clip bg-black text-white">
-        <article className="mx-auto grid w-full min-w-0 max-w-full gap-0 overflow-x-clip px-0 py-8">
-          <Link
-            className="group z-50 ml-5 inline-flex min-h-16 w-fit items-center justify-self-start gap-4 text-[18px] font-black text-white/50 transition-[color,transform] duration-200 hover:-translate-y-0.5 hover:text-white focus-visible:text-white md:ml-8 md:text-[22px] lg:ml-10 xl:ml-12 xl:text-[28px]"
-            href="/"
-            aria-label="Back to Huilin Park"
-          >
-            <Home size={48} strokeWidth={1.8} />
-            <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[320px] group-hover:opacity-100 group-focus-visible:max-w-[320px] group-focus-visible:opacity-100">
-              Back to Huilin Park
-            </span>
-          </Link>
+        <article className="mx-auto grid w-full min-w-0 max-w-full gap-0 overflow-x-clip px-0">
+          <GlobalNavigation tone="dark" className="z-50 mb-6" />
 
           <BodyClockCaseStudy />
 
@@ -91,17 +83,8 @@ export default async function ProjectPage({
   if (isInternshipProjects) {
     return (
       <main className="min-h-screen bg-white text-[#0a0a0a]">
-        <article className="mx-auto grid w-full gap-0 px-0 py-8">
-          <Link
-            className="group z-50 ml-5 inline-flex min-h-16 w-fit items-center justify-self-start gap-4 text-[18px] font-black text-black/40 transition-[color,transform] duration-200 hover:-translate-y-0.5 hover:text-black focus-visible:text-black md:ml-8 md:text-[22px] lg:ml-10 xl:ml-12 xl:text-[28px]"
-            href="/"
-            aria-label="Back to Huilin Park"
-          >
-            <Home size={48} strokeWidth={1.8} />
-            <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[320px] group-hover:opacity-100 group-focus-visible:max-w-[320px] group-focus-visible:opacity-100">
-              Back to Huilin Park
-            </span>
-          </Link>
+        <article className="mx-auto grid w-full gap-0 px-0">
+          <GlobalNavigation className="z-50 mb-6" />
 
           <InternshipProjectsCaseStudy />
 
@@ -115,22 +98,12 @@ export default async function ProjectPage({
 
   return (
     <main className={`min-h-screen ${isCommunityGardens ? "bg-white text-black" : "bg-[#fffaf0] text-[#202018]"}`}>
+      <GlobalNavigation />
       <article
         className={`mx-auto grid w-full gap-12 px-5 py-8 md:px-8 md:py-12 lg:px-10 xl:px-12 ${
           isCommunityGardens ? "max-w-[1440px]" : "max-w-6xl"
         }`}
       >
-        <Link
-          className="group inline-flex min-h-16 w-fit items-center justify-self-start gap-4 text-[18px] font-black text-black/50 transition-[color,transform] duration-200 hover:-translate-y-0.5 hover:text-black focus-visible:text-black md:text-[22px] xl:text-[28px]"
-          href="/"
-          aria-label="Back to Huilin Park"
-        >
-          <Home size={48} strokeWidth={1.8} />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[320px] group-hover:opacity-100 group-focus-visible:max-w-[320px] group-focus-visible:opacity-100">
-            Back to Huilin Park
-          </span>
-        </Link>
-
         {project.details ? (
           <>
             {isCommunityGardens ? (

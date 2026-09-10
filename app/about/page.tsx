@@ -1,7 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 import { PhotoBoothCamera } from "@/components/about/PhotoBoothHero";
 import { ProjectFooterNavigation } from "@/components/projects/ProjectFooterNavigation";
+import { GlobalNavigation } from "@/components/GlobalNavigation";
 
 const currentWork = [
   {
@@ -29,27 +29,7 @@ const currentWork = [
 export default function AboutPage() {
   return (
     <main className="editorial-about">
-      <header className="editorial-about-nav">
-        <Link
-          href="/"
-          className="group inline-flex min-h-16 w-fit items-center gap-4 text-[18px] font-black text-black/45 transition-[color,transform] duration-200 hover:-translate-y-0.5 hover:text-black focus-visible:text-black md:text-[22px] xl:text-[28px]"
-          aria-label="Back to Huilin Park homepage"
-        >
-          <span className="opacity-55 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-            <Image
-              className="h-12 w-12 min-w-12 object-contain"
-              src="/assets/huilin-park-mark.png"
-              alt=""
-              width={48}
-              height={48}
-              priority
-            />
-          </span>
-          <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-300 group-hover:max-w-[320px] group-hover:opacity-100 group-focus-visible:max-w-[320px] group-focus-visible:opacity-100">
-            Back to Huilin Park
-          </span>
-        </Link>
-      </header>
+      <GlobalNavigation />
 
       <section
         className="editorial-hero"

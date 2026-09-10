@@ -46,14 +46,15 @@ function BalloonFlower({
             receiveShadow
             position={[Math.cos(angle) * 0.16, Math.sin(angle) * 0.16, 0]}
             rotation={[0, 0, angle - Math.PI / 2]}
-            scale={[0.155, 0.205, 0.12]}
+            scale={[0.155, 0.205, 0.16]}
           >
             <sphereGeometry args={[1, 14, 12]} />
             <meshStandardMaterial color={color} roughness={0.26} metalness={0.015} />
           </mesh>
         ))}
 
-        <mesh castShadow receiveShadow position={[0, 0, 0.055]} scale={[0.155, 0.155, 0.11]}>
+        {/* A centred, rounded core projects beyond the petals on both sides. */}
+        <mesh castShadow receiveShadow scale={[0.155, 0.155, 0.205]}>
           <sphereGeometry args={[1, 14, 12]} />
           <meshStandardMaterial color={centerColor} roughness={0.24} metalness={0.015} />
         </mesh>

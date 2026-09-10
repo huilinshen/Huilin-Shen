@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useFrame } from "@react-three/fiber";
 import { Html, useCursor } from "@react-three/drei";
 import type { Group } from "three";
@@ -34,12 +33,15 @@ function getHomepageHoverTitle(destination: ParkDestination) {
 
 export function Booth({
   destination,
-  onHoverDestination,
+  isSelected,
+  isDeemphasized,
+  onSelectDestination,
 }: {
   destination: ParkDestination;
-  onHoverDestination?: (title: string | null) => void;
+  isSelected: boolean;
+  isDeemphasized: boolean;
+  onSelectDestination: (destinationId: string) => void;
 }) {
-  const router = useRouter();
   const interactiveUnitRef = useRef<Group>(null);
   const [hovered, setHovered] = useState(false);
   useCursor(hovered);
@@ -61,7 +63,7 @@ export function Booth({
   useFrame((_, delta) => {
     if (!interactiveUnitRef.current) return;
 
-    const targetScale = hovered ? 1.1 : 1;
+    const targetScale = hovered ? 1.1 : isSelected ? 1.04 : isDeemphasized ? 0.94 : 1;
     const ease = 1 - Math.exp(-delta * 12);
     const nextScale = interactiveUnitRef.current.scale.x
       + (targetScale - interactiveUnitRef.current.scale.x) * ease;
@@ -69,28 +71,20 @@ export function Booth({
     interactiveUnitRef.current.scale.setScalar(nextScale);
   });
 
-  const openDestination = () => {
-    if (destination.href.startsWith("mailto:")) {
-      window.location.href = destination.href;
-      return;
-    }
-
-    router.push(destination.href);
-  };
-
   return (
     <group position={destination.position}>
       <group
         ref={interactiveUnitRef}
-        onClick={openDestination}
+        onClick={(event) => {
+          event.stopPropagation();
+          onSelectDestination(destination.id);
+        }}
         onPointerEnter={(event) => {
           event.stopPropagation();
           setHovered(true);
-          onHoverDestination?.(hoverTitle);
         }}
         onPointerLeave={() => {
           setHovered(false);
-          onHoverDestination?.(null);
         }}
       >
         {destination.modelPath ? (
@@ -125,13 +119,13 @@ export function Booth({
         <Html position={hoverLabelPosition} pointerEvents="none">
           <div
             style={{
-              color: hovered ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0.2)",
+              color: hovered || isSelected ? "rgba(25, 24, 18, 1)" : "rgba(0, 0, 0, 0)",
               fontSize: "24px",
               fontWeight: 800,
               lineHeight: 1.15,
               maxWidth: "220px",
               textAlign: "center",
-              transform: `translate(-50%, calc(-100% - 36px)) scale(${hovered ? 1.1 : 1})`,
+              transform: `translate(-50%, calc(-100% - 36px)) scale(${hovered || isSelected ? 1.05 : 0.92})`,
               transformOrigin: "center bottom",
               transition: "color 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1)",
               width: "max-content",
