@@ -119,7 +119,7 @@ export function Booth({
         <Html position={hoverLabelPosition} pointerEvents="none">
           <div
             style={{
-              color: hovered || isSelected ? "rgba(25, 24, 18, 1)" : "rgba(0, 0, 0, 0)",
+              color: hovered || isSelected ? "var(--park-foreground)" : "rgba(0, 0, 0, 0)",
               fontSize: "24px",
               fontWeight: 800,
               lineHeight: 1.15,

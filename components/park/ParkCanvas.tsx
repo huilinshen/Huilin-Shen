@@ -9,6 +9,7 @@ import { OrbitControls } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { Vector3 } from "three";
 import { ParkScene } from "@/components/park/ParkScene";
+import { DayPaletteContext } from "@/components/park/DayPalette";
 import { parkDestinations } from "@/data/projects";
 
 export type ParkWeather = "day" | "night" | "rain" | "christmas";
@@ -65,12 +66,14 @@ export function ParkCanvas() {
     setSelectedDestinationId(id);
   }, [router, selectedDestinationId]);
   return <div className={`park-experience park-weather-${weather} ${selectedDestinationId ? "is-focused" : ""}`}>
-    <Canvas camera={{ position: [4.8, 4.2, 6.2], fov: 42 }} dpr={[1, 1.65]} gl={{ antialias: true, powerPreference: "high-performance" }} shadows className="h-full min-h-[620px] w-full" onPointerMissed={() => selectedDestinationId && selectDestination(null)}>
-      <color attach="background" args={[winterNight ? "#101c38" : weather === "night" ? "#142a52" : weather === "rain" ? "#809aae" : "#bfe7ff"]} />
-      <fog attach="fog" args={[winterNight ? "#101c38" : weather === "night" ? "#142a52" : weather === "rain" ? "#809aae" : "#bfe7ff", 9, 17]} />
+    <Canvas camera={{ position: [4.8, 4.2, 6.2], fov: 42 }} dpr={[1, 1.65]} gl={{ antialias: true, powerPreference: "high-performance" }} shadows className="h-full w-full" onPointerMissed={() => selectedDestinationId && selectDestination(null)}>
+      <color attach="background" args={[winterNight ? "#101c38" : weather === "night" ? "#142a52" : weather === "rain" ? "#809aae" : "#fbffee"]} />
+      <fog attach="fog" args={[winterNight ? "#101c38" : weather === "night" ? "#142a52" : weather === "rain" ? "#809aae" : "#fbffee", 9, 17]} />
       <ambientLight intensity={winterNight ? 0.52 : weather === "night" ? 0.34 : weather === "rain" ? 0.58 : 0.82} color={winterNight ? "#b5c9ef" : weather === "night" ? "#789cff" : "#fff8e8"} />
       <directionalLight castShadow intensity={winterNight ? 0.95 : weather === "night" ? 0.65 : weather === "rain" ? 1.05 : 1.75} color={winterNight ? "#c9daff" : weather === "night" ? "#b9c9ff" : "#fff4dd"} position={[3.5, 6, 4]} shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
-      <ParkScene weather={weather} onSelectDestination={selectDestination} selectedDestinationId={selectedDestinationId} />
+      <DayPaletteContext.Provider value={weather === "day"}>
+        <ParkScene weather={weather} onSelectDestination={selectDestination} selectedDestinationId={selectedDestinationId} />
+      </DayPaletteContext.Provider>
       <CameraRig selectedId={selectedDestinationId} />
     </Canvas>
     <div className="park-weather-panel" aria-label="Park atmosphere"><span>Park weather</span><div>{weatherOptions.map(({ id, label, icon: Icon }) => <button key={id} type="button" className={weather === id ? "is-active" : ""} onClick={() => setWeather(id)} aria-pressed={weather === id}><Icon size={14} /> <span>{label}</span></button>)}</div></div>

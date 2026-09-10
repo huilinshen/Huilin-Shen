@@ -16,7 +16,7 @@ export function SnowCover({ park }: { park: RefObject<Group | null> }) {
     if (!root) return;
     root.updateWorldMatrix(true, true);
     const hosts: Mesh[] = [];
-    root.traverse((object) => { if (object instanceof Mesh) hosts.push(object); });
+    root.traverse((object) => { if (object instanceof Mesh && !object.userData.noSnow) hosts.push(object); });
     const snowMaterial = new MeshStandardMaterial({ color: "#e4edf5", roughness: 0.95, flatShading: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 });
     const caps: Mesh[] = [];
     const a = new Vector3(), b = new Vector3(), c = new Vector3();

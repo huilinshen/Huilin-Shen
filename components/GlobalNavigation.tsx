@@ -11,7 +11,13 @@ export function GlobalNavigation({
   return (
     <header className={`global-choice-nav global-choice-nav-${tone} ${className}`}>
       <Link href="/" className="global-choice-link global-choice-home">
-        <span className="global-choice-mark" aria-hidden="true"><Sparkles size={16} /></span>
+        <span
+          className="global-choice-mark"
+          aria-hidden="true"
+          style={{ width: "1rem", aspectRatio: "auto", borderRadius: 0, background: "transparent", boxShadow: "none", color: "inherit" }}
+        >
+          <Sparkles size={18} strokeWidth={1.9} />
+        </span>
         <span>Huilin Park Exploration</span>
       </Link>
       <Link href="/projects" className="global-choice-link global-choice-projects">

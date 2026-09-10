@@ -1,5 +1,7 @@
 "use client";
 
+import { ParkMaterial } from "@/components/park/DayPalette";
+
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
@@ -26,16 +28,16 @@ function BalloonFlower({
     <group position={position} scale={scale} rotation={[0, rotation, 0]}>
       <mesh castShadow receiveShadow position={[0, stemHeight / 2, 0]}>
         <cylinderGeometry args={[0.045, 0.06, stemHeight, 8]} />
-        <meshStandardMaterial color="#66a96e" roughness={0.72} metalness={0} />
+        <ParkMaterial color="#66a96e" roughness={0.72} metalness={0} />
       </mesh>
 
       <mesh castShadow position={[-0.1, stemHeight * 0.46, 0.015]} rotation={[0.12, 0.12, 1.02]} scale={[0.12, 0.24, 0.08]}>
         <sphereGeometry args={[1, 12, 10]} />
-        <meshStandardMaterial color="#86c98b" roughness={0.55} metalness={0} />
+        <ParkMaterial color="#86c98b" roughness={0.55} metalness={0} />
       </mesh>
       <mesh castShadow position={[0.1, stemHeight * 0.62, 0.015]} rotation={[0.12, -0.12, -1.02]} scale={[0.11, 0.21, 0.075]}>
         <sphereGeometry args={[1, 12, 10]} />
-        <meshStandardMaterial color="#75bb7d" roughness={0.55} metalness={0} />
+        <ParkMaterial color="#75bb7d" roughness={0.55} metalness={0} />
       </mesh>
 
       <group position={[0, stemHeight, 0]}>
@@ -49,14 +51,14 @@ function BalloonFlower({
             scale={[0.155, 0.205, 0.16]}
           >
             <sphereGeometry args={[1, 14, 12]} />
-            <meshStandardMaterial color={color} roughness={0.26} metalness={0.015} />
+            <ParkMaterial color={color} roughness={0.26} metalness={0.015} />
           </mesh>
         ))}
 
         {/* A centred, rounded core projects beyond the petals on both sides. */}
         <mesh castShadow receiveShadow scale={[0.155, 0.155, 0.205]}>
           <sphereGeometry args={[1, 14, 12]} />
-          <meshStandardMaterial color={centerColor} roughness={0.24} metalness={0.015} />
+          <ParkMaterial color={centerColor} roughness={0.24} metalness={0.015} />
         </mesh>
       </group>
     </group>

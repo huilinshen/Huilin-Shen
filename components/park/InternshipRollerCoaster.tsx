@@ -1,5 +1,7 @@
 "use client";
 
+import { ParkMaterial } from "@/components/park/DayPalette";
+
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CatmullRomCurve3, Vector3 } from "three";
@@ -29,7 +31,7 @@ function Track({ curve, color }: { curve: CatmullRomCurve3; color: string }) {
       {[-0.035, 0.035].map((offset) => (
         <mesh key={offset} castShadow receiveShadow position={[0, 0, offset]}>
           <tubeGeometry args={[curve, 40, 0.022, 5, true]} />
-          <meshStandardMaterial color={color} roughness={0.78} metalness={0} flatShading />
+          <ParkMaterial color={color} roughness={0.78} metalness={0} flatShading />
         </mesh>
       ))}
     </group>
@@ -41,19 +43,19 @@ function TeaStation() {
     <group position={[-0.58, 0.23, -0.38]}>
       <mesh castShadow receiveShadow>
         <cylinderGeometry args={[0.2, 0.23, 0.18, 10]} />
-        <meshStandardMaterial color={cream} roughness={0.86} />
+        <ParkMaterial color={cream} roughness={0.86} />
       </mesh>
       <mesh castShadow position={[0, 0.19, 0]}>
         <cylinderGeometry args={[0.085, 0.11, 0.28, 10]} />
-        <meshStandardMaterial color={lightBlue} roughness={0.82} />
+        <ParkMaterial color={lightBlue} roughness={0.82} />
       </mesh>
       <mesh castShadow position={[0, 0.35, 0]}>
         <cylinderGeometry args={[0.06, 0.075, 0.06, 8]} />
-        <meshStandardMaterial color={cream} roughness={0.86} />
+        <ParkMaterial color={cream} roughness={0.86} />
       </mesh>
       <mesh castShadow position={[-0.15, 0.3, 0.02]} rotation={[0.15, 0, 0.75]} scale={[1.45, 0.55, 0.35]}>
         <sphereGeometry args={[0.1, 8, 6]} />
-        <meshStandardMaterial color={blue} roughness={0.84} flatShading />
+        <ParkMaterial color={blue} roughness={0.84} flatShading />
       </mesh>
     </group>
   );
@@ -64,23 +66,23 @@ function FotileStation() {
     <group position={[0.55, 0.22, 0.37]}>
       <mesh castShadow receiveShadow position={[0, 0.06, 0]}>
         <boxGeometry args={[0.46, 0.12, 0.36]} />
-        <meshStandardMaterial color={lightOrange} roughness={0.84} />
+        <ParkMaterial color={lightOrange} roughness={0.84} />
       </mesh>
       <mesh castShadow position={[0, 0.26, 0]} rotation={[0, 0, -0.08]}>
         <boxGeometry args={[0.52, 0.055, 0.31]} />
-        <meshStandardMaterial color={orange} roughness={0.74} />
+        <ParkMaterial color={orange} roughness={0.74} />
       </mesh>
       <mesh castShadow position={[0, 0.21, -0.145]}>
         <boxGeometry args={[0.36, 0.11, 0.025]} />
-        <meshStandardMaterial color={darkGlass} roughness={0.5} metalness={0.04} />
+        <ParkMaterial color={darkGlass} roughness={0.5} metalness={0.04} />
       </mesh>
       <mesh castShadow position={[-0.14, 0.12, -0.19]}>
         <boxGeometry args={[0.11, 0.055, 0.05]} />
-        <meshStandardMaterial color={skyBlue} roughness={0.72} />
+        <ParkMaterial color={skyBlue} roughness={0.72} />
       </mesh>
       <mesh castShadow position={[0.14, 0.12, -0.19]}>
         <boxGeometry args={[0.11, 0.055, 0.05]} />
-        <meshStandardMaterial color={warmOrange} roughness={0.72} />
+        <ParkMaterial color={warmOrange} roughness={0.72} />
       </mesh>
     </group>
   );
@@ -115,7 +117,7 @@ export function InternshipRollerCoaster({ hovered }: { hovered: boolean }) {
         {supportPositions.map(([x, y, z, height]) => (
           <mesh key={`${x}-${z}`} castShadow receiveShadow position={[x, y, z]}>
             <cylinderGeometry args={[0.025, 0.04, height, 6]} />
-            <meshStandardMaterial color={cream} roughness={0.88} flatShading />
+            <ParkMaterial color={cream} roughness={0.88} flatShading />
           </mesh>
         ))}
       </group>
@@ -128,11 +130,11 @@ export function InternshipRollerCoaster({ hovered }: { hovered: boolean }) {
       <group name="CoasterCars">
         <mesh castShadow position={[-0.26, 0.74, -0.29]} rotation={[0, 0.25, -0.35]}>
           <boxGeometry args={[0.2, 0.09, 0.13]} />
-          <meshStandardMaterial color={lightBlue} roughness={0.8} flatShading />
+          <ParkMaterial color={lightBlue} roughness={0.8} flatShading />
         </mesh>
         <mesh castShadow position={[0.16, 0.82, 0.27]} rotation={[0, -0.18, 0.35]}>
           <boxGeometry args={[0.2, 0.09, 0.13]} />
-          <meshStandardMaterial color={lightOrange} roughness={0.8} flatShading />
+          <ParkMaterial color={lightOrange} roughness={0.8} flatShading />
         </mesh>
       </group>
     </group>

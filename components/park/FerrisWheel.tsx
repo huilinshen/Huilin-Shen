@@ -1,5 +1,7 @@
 "use client";
 
+import { ParkMaterial } from "@/components/park/DayPalette";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
@@ -35,7 +37,7 @@ function SupportBeam({
       rotation={[0, 0, -Math.atan2(dx, dy)]}
     >
       <boxGeometry args={[0.065, length, 0.065]} />
-      <meshStandardMaterial color={color} roughness={0.82} metalness={0} flatShading />
+      <ParkMaterial color={color} roughness={0.82} metalness={0} flatShading />
     </mesh>
   );
 }
@@ -60,15 +62,15 @@ function Cabin({
       <group ref={(node) => registerCabin(index, node)}>
         <mesh castShadow receiveShadow position={[0, -0.05, 0]}>
           <boxGeometry args={[0.025, 0.1, 0.025]} />
-          <meshStandardMaterial color="#fff5d6" roughness={0.86} />
+          <ParkMaterial color="#fff5d6" roughness={0.86} />
         </mesh>
         <mesh castShadow receiveShadow position={[0, -0.13, 0]}>
           <cylinderGeometry args={[0.085, 0.095, 0.12, 8]} />
-          <meshStandardMaterial color={cabinColors[index % cabinColors.length]} roughness={0.84} metalness={0} flatShading />
+          <ParkMaterial color={cabinColors[index % cabinColors.length]} roughness={0.84} metalness={0} flatShading />
         </mesh>
         <mesh castShadow receiveShadow position={[0, -0.06, 0]}>
           <cylinderGeometry args={[0.105, 0.085, 0.035, 8]} />
-          <meshStandardMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
+          <ParkMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
         </mesh>
       </group>
     </group>
@@ -112,7 +114,7 @@ export function FerrisWheel({ destination }: { destination: ParkDestination }) {
         {[-0.29, 0.29].map((depth) => (
           <mesh key={`foot-${depth}`} castShadow receiveShadow position={[0, 0.035, depth]}>
             <boxGeometry args={[1.02, 0.07, 0.08]} />
-            <meshStandardMaterial color={SUPPORT_GRAY} roughness={0.84} metalness={0} flatShading />
+            <ParkMaterial color={SUPPORT_GRAY} roughness={0.84} metalness={0} flatShading />
           </mesh>
         ))}
       </group>
@@ -120,12 +122,12 @@ export function FerrisWheel({ destination }: { destination: ParkDestination }) {
       <group name="Axle" position={[0, WHEEL_CENTER_Y, 0]}>
         <mesh castShadow receiveShadow rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.045, 0.045, 0.72, 10]} />
-          <meshStandardMaterial color={SUPPORT_GRAY} roughness={0.78} metalness={0} flatShading />
+          <ParkMaterial color={SUPPORT_GRAY} roughness={0.78} metalness={0} flatShading />
         </mesh>
         {[-0.34, 0.34].map((depth) => (
           <mesh key={depth} castShadow receiveShadow position={[0, 0, depth]} rotation={[Math.PI / 2, 0, 0]}>
             <cylinderGeometry args={[0.075, 0.075, 0.045, 10]} />
-            <meshStandardMaterial color="#fff5d6" roughness={0.82} metalness={0} flatShading />
+            <ParkMaterial color="#fff5d6" roughness={0.82} metalness={0} flatShading />
           </mesh>
         ))}
       </group>
@@ -135,12 +137,12 @@ export function FerrisWheel({ destination }: { destination: ParkDestination }) {
           {[-0.045, 0.045].map((depth) => (
             <mesh key={depth} castShadow receiveShadow position={[0, 0, depth]}>
               <torusGeometry args={[WHEEL_RADIUS, 0.032, 6, 40]} />
-              <meshStandardMaterial color={destination.color} roughness={0.82} metalness={0} flatShading />
+              <ParkMaterial color={destination.color} roughness={0.82} metalness={0} flatShading />
             </mesh>
           ))}
           <mesh castShadow receiveShadow>
             <torusGeometry args={[0.36, 0.016, 5, 32]} />
-            <meshStandardMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
+            <ParkMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
           </mesh>
         </group>
 
@@ -148,14 +150,14 @@ export function FerrisWheel({ destination }: { destination: ParkDestination }) {
           {spokeAngles.map((angle) => (
             <mesh key={angle} castShadow receiveShadow rotation={[0, 0, angle]}>
               <boxGeometry args={[WHEEL_RADIUS * 2, 0.018, 0.025]} />
-              <meshStandardMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
+              <ParkMaterial color="#fff5d6" roughness={0.86} metalness={0} flatShading />
             </mesh>
           ))}
         </group>
 
         <mesh name="RotatingHub" castShadow receiveShadow rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.085, 0.085, 0.16, 10]} />
-          <meshStandardMaterial color={SUPPORT_GRAY} roughness={0.8} metalness={0} flatShading />
+          <ParkMaterial color={SUPPORT_GRAY} roughness={0.8} metalness={0} flatShading />
         </mesh>
 
         <group name="CabinAnchors">
