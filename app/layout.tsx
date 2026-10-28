@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Huilin Park",
-  description: "A playful 3D UIUX portfolio park built with Next.js and Three.js.",
+  description: "Selected product, interaction and service design work by Huilin Shen, a London-based Product Designer.",
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any" }],
     shortcut: "/favicon.ico",

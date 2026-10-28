@@ -1,0 +1,184 @@
+.home {
+  /* Tune the parallel projection, diagonal spacing, expansion, lift and timing here. */
+  --plane-angle: -32deg;
+  --plane-skew: 27deg;
+  --card-width: 22vw;
+  --default-spacing: 5.7vw;
+  --diagonal-rise: 2.15vw;
+  --expanded-spacing: 1.6vw;
+  --lift-distance: 4vw;
+  --active-scale: 1.3;
+  --motion-duration: 400ms;
+  --motion-easing: cubic-bezier(0.22, 0.68, 0.25, 1);
+  --page-inset: clamp(24px, 2.9vw, 84px);
+  min-height: 100svh;
+  overflow-x: clip;
+  padding-bottom: clamp(60px, 6vw, 160px);
+  background: #f1f1f0;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.home a:focus-visible { outline: 2px solid #111; outline-offset: 7px; }
+.information {
+  display: grid;
+  position: relative;
+  z-index: 20;
+  width: min(40vw, 1152px);
+  margin: clamp(42px, 3.1vw, 90px) 0 0 var(--page-inset);
+  /* Sharing one grid cell reserves the tallest state's space without measurement. */
+  pointer-events: none;
+}
+.textState {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms ease, visibility 180ms;
+}
+.textState[data-visible="true"] { opacity: 1; visibility: visible; }
+.textState h1, .textState h2 {
+  margin: 0;
+  font-size: clamp(40px, 2.85vw, 82px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px 14px;
+  padding: 0;
+  margin: clamp(20px, 1.5vw, 43px) 0 clamp(22px, 1.8vw, 52px);
+  list-style: none;
+  color: #737370;
+  font-size: clamp(14px, 1.1vw, 31px);
+  line-height: 1.35;
+}
+.keywords li { border: 1px solid #858582; border-radius: 999px; padding: 0.55em 1.25em; }
+.textState p {
+  max-width: 42em;
+  margin: 0;
+  font-size: clamp(16px, 1.1vw, 31px);
+  line-height: 1.38;
+  letter-spacing: -0.025em;
+}
+/* Every copy state shares one cell, so the tallest reserves space even when hidden.
+   At this width, covers beneath the text start at least six diagonal steps down;
+   that clearance also accommodates the active cover's upward lift. */
+.summary { display: grid; gap: 1.2em; }
+.textState .projectDate { margin-top: 0.9em; }
+.gallery { margin-top: -30px; }
+.galleryHeading { display: none; }
+.boards {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  height: calc(var(--diagonal-rise) * (var(--project-count) - 1) + var(--card-width) * 1.22 + 80px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.item {
+  position: absolute;
+  left: 3vw;
+  top: 0;
+  width: var(--card-width);
+  transform: translate(
+    calc(var(--index) * var(--default-spacing) + var(--spread-direction) * var(--expanded-spacing)),
+    calc((var(--project-count) - 1 - var(--index)) * var(--diagonal-rise) - var(--spread-direction) * var(--expanded-spacing) * 0.36 - var(--lift) * var(--lift-distance))
+  );
+  transition: transform var(--motion-duration) var(--motion-easing);
+  pointer-events: none;
+}
+.card {
+  display: block;
+  position: relative;
+  color: #151515;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform-origin: top left;
+  transform: rotateY(var(--plane-angle)) skewY(var(--plane-skew));
+  box-shadow: none;
+  transition: transform var(--motion-duration) var(--motion-easing), box-shadow var(--motion-duration) ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.item[data-active="true"] .cover { background: rgb(0 0 0 / 36%); }
+.item[data-active="true"] .card {
+  transform: rotateY(var(--plane-angle)) skewY(var(--plane-skew)) scale(var(--active-scale));
+  box-shadow: 12px 18px 30px rgb(85 85 85 / 16%), 5px 8px 14px rgb(85 85 85 / 8%);
+}
+.item:last-child[data-active="true"] .card {
+  transform: translateX(-4vw) rotateY(var(--plane-angle)) skewY(var(--plane-skew)) scale(var(--active-scale));
+}
+.home .card:focus-visible { outline: 3px solid #111; outline-offset: 8px; }
+.cover { position: relative; width: 100%; aspect-ratio: 297 / 210; background: #fff; overflow: hidden; }
+.srOnly, .skipLink:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skipLink:focus { position: absolute; z-index: 100; top: 16px; left: 24px; padding: 12px; background: #fff; color: #111; }
+/* Touch and narrow layouts keep the image-only covers in a simple grid. */
+@media (max-width: 1099px), (hover: none), (pointer: coarse) {
+  .information { width: min(760px, calc(100% - var(--page-inset) * 2)); }
+  .textState { display: none; }
+  .textState:first-child { display: block; opacity: 1; visibility: visible; }
+  .textState h1 { font-size: clamp(40px, 6vw, 64px); }
+  .textState p { font-size: 17px; line-height: 1.5; }
+  .keywords { justify-content: flex-start; column-gap: 30px; font-size: 15px; }
+  .gallery { margin: 64px var(--page-inset) 60px; }
+  .boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; height: auto; min-width: 0; }
+  .item { position: static; width: auto; transform: none; pointer-events: auto; }
+  .card { transform: none; background: transparent; box-shadow: none; }
+  .item[data-active="true"] .card { box-shadow: none; }
+}
+@media (max-width: 700px) {
+  .information { margin-top: 42px; }
+  .keywords { gap: 8px 18px; margin: 22px 0; font-size: 13px; }
+  .textState p { font-size: 16px; }
+  .boards { grid-template-columns: 1fr; gap: 38px; }
+  .gallery { margin-top: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .item, .card, .textState, .comingSoon { transition: none; }
+}
+
+.cover img { object-fit: contain; }
+
+.card[data-unavailable="true"] { cursor: default; }
+.comingSoon {
+  position: absolute;
+  z-index: 2;
+  bottom: 12px;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #242424;
+  color: #fff;
+  font: 400 12px/1.45 Arial, Helvetica, sans-serif;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 7px);
+  transition: opacity 250ms ease-out, transform 250ms ease-out;
+}
+.card[data-unavailable="true"]:hover .comingSoon,
+.card[data-unavailable="true"]:focus-visible .comingSoon {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (hover: none), (pointer: coarse) {
+  .item[data-preview="true"] .comingSoon { opacity: 1; transform: translate(-50%, 0); }
+}

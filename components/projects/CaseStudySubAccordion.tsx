@@ -6,14 +6,15 @@ type CaseStudySubAccordionProps = {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  id?: string;
 };
 
-export function CaseStudySubAccordion({ title, children, defaultOpen = false }: CaseStudySubAccordionProps) {
+export function CaseStudySubAccordion({ title, children, defaultOpen = false, id }: CaseStudySubAccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentId = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   return (
-    <section className="grid gap-8">
+    <section id={id} className="grid gap-8">
       <button
         type="button"
         aria-expanded={isOpen}

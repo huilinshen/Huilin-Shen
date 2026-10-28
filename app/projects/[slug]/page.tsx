@@ -10,6 +10,7 @@ import { CaseStudySubAccordion } from "@/components/projects/CaseStudySubAccordi
 import { ResearchProcessAccordion } from "@/components/projects/ResearchProcessAccordion";
 import { InternshipProjectsCaseStudy } from "@/components/projects/InternshipProjectsCaseStudy";
 import { ProjectFooterNavigation } from "@/components/projects/ProjectFooterNavigation";
+import { ProjectChapterNavigation } from "@/components/projects/ProjectChapterNavigation";
 import { GlobalNavigation } from "@/components/GlobalNavigation";
 
 export function generateStaticParams() {
@@ -66,14 +67,18 @@ export default async function ProjectPage({
 
   if (isBodyClock) {
     return (
-      <main className="min-h-screen overflow-x-clip bg-black text-white">
+      <main className="min-h-screen overflow-x-clip bg-[#02040a] text-white">
         <article className="mx-auto grid w-full min-w-0 max-w-full gap-0 overflow-x-clip px-0">
-          <GlobalNavigation tone="dark" className="z-50 mb-6" />
+          <div className="bg-black pb-6">
+            <GlobalNavigation tone="dark" className="body-clock-header z-50" />
+          </div>
 
           <BodyClockCaseStudy />
 
-          <footer className="grid w-dvw max-w-[1440px] justify-self-start bg-[#02040a] px-5 py-12 md:px-8 md:py-16 lg:px-10 xl:mx-auto xl:justify-self-center xl:px-12">
-            <ProjectFooterNavigation current="generative-watch-face" tone="dark" />
+          <footer className="w-full bg-[linear-gradient(180deg,#02040a_0%,#060b18_100%)] px-5 pb-12 pt-44 md:px-10 md:pb-16 md:pt-52">
+            <div className="mx-auto w-full max-w-[1280px]">
+              <ProjectFooterNavigation current="generative-watch-face" tone="dark" />
+            </div>
           </footer>
         </article>
       </main>
@@ -88,8 +93,10 @@ export default async function ProjectPage({
 
           <InternshipProjectsCaseStudy />
 
-          <footer className="mx-auto grid w-full max-w-[1440px] bg-white px-5 py-12 md:px-8 md:py-16 lg:px-10 xl:px-12">
-            <ProjectFooterNavigation current="internship-projects" />
+          <footer className="mx-auto grid w-full max-w-[1440px] bg-white px-5 pb-12 pt-[120px] md:px-8 md:pb-16 md:pt-[152px] lg:px-10 lg:pt-32 xl:px-12">
+            <div className="mx-auto w-full max-w-[1280px]">
+              <ProjectFooterNavigation current="internship-projects" />
+            </div>
           </footer>
         </article>
       </main>
@@ -98,16 +105,27 @@ export default async function ProjectPage({
 
   return (
     <main className={`min-h-screen ${isCommunityGardens ? "bg-white text-black" : "bg-[#fffaf0] text-[#202018]"}`}>
+      <ProjectChapterNavigation
+        tone="light"
+        accent={isCommunityGardens ? "#75A723" : project.accent}
+        chapters={isCommunityGardens
+          ? [["Hero", "hero"], ["Research", "research"],
+              ["Desk Research", "research-stage-1", true], ["Interview with Stakeholder", "research-stage-2", true],
+              ["Participatory Workshop", "research-stage-3", true], ["Target Users", "research-stage-4", true],
+              ["Ideation", "research-stage-5", true], ["Delivery", "research-stage-6", true],
+              ["Reference", "research-reference", true]]
+          : [["Hero", "hero"], ...project.sections.map((section, index) => [section.title, `section-${index}`] as const)]}
+      />
       <GlobalNavigation />
       <article
-        className={`mx-auto grid w-full gap-12 px-5 py-8 md:px-8 md:py-12 lg:px-10 xl:px-12 ${
+        className={`mx-auto grid w-full gap-12 px-5 pt-8 md:px-8 md:pt-12 lg:px-10 xl:px-12 ${
           isCommunityGardens ? "max-w-[1440px]" : "max-w-6xl"
         }`}
       >
         {project.details ? (
           <>
             {isCommunityGardens ? (
-              <header className="grid gap-10 py-8 md:py-14">
+              <header id="hero" className="grid gap-10 py-8 md:py-14">
                 <div className="grid gap-8">
                   <h1 className={communityProjectTitleClass}>
                     Community Gardens Forres
@@ -168,7 +186,7 @@ export default async function ProjectPage({
                 </section>
               </header>
             ) : (
-              <header className="grid gap-10 py-8 md:grid-cols-[0.92fr_1.08fr] md:gap-16 md:py-14">
+              <header id="hero" className="grid gap-10 py-8 md:grid-cols-[0.92fr_1.08fr] md:gap-16 md:py-14">
                 <div className="grid min-h-[360px] content-between gap-8">
                   <div className="grid gap-8">
                     <h1 className="max-w-3xl text-4xl font-medium leading-tight md:text-6xl">
@@ -422,11 +440,11 @@ export default async function ProjectPage({
         )}
 
         {isCommunityGardens ? (
-          <ResearchProcessAccordion>
+          <ResearchProcessAccordion id="research">
             <div className="grid gap-16">
               <section className="w-full bg-white" aria-label="Research overview">
                 <Image
-                  src="/projects/community-gardens/outputs/research-bg.png?v=2"
+                  src="/projects/community-gardens/outputs/research-bg.png"
                   alt="Community garden research overview for Forres Friends of Woods and Fields"
                   width={1684}
                   height={1152}
@@ -436,7 +454,7 @@ export default async function ProjectPage({
                 />
               </section>
 
-              <CaseStudySubAccordion title="Stage1 Desk Research">
+              <CaseStudySubAccordion id="research-stage-1" title="Stage1 Desk Research">
                 <section
                   className="grid gap-16 bg-white text-[14px] font-normal leading-normal text-black md:text-[16px] xl:text-[18px]"
                   aria-label="Stage 1 desk research"
@@ -475,7 +493,7 @@ export default async function ProjectPage({
                       <p>These are all gardening and growing I found in Forres</p>
                     </div>
                     <Image
-                      src="/projects/community-gardens/outputs/field-research.png?v=1"
+                      src="/projects/community-gardens/outputs/field-research.png"
                       alt="Field research strip showing gardens and floral displays in Forres"
                       width={1558}
                       height={168}
@@ -558,14 +576,14 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="Stage2 Interview with Stakeholder">
+              <CaseStudySubAccordion id="research-stage-2" title="Stage2 Interview with Stakeholder">
                 <section
                   className="grid gap-16 bg-white text-[14px] font-normal leading-normal text-black md:text-[16px] xl:text-[18px]"
                   aria-label="Stage 2 interview with stakeholder"
                 >
                   <section className="grid gap-8">
                     <Image
-                      src="/projects/community-gardens/outputs/forres-friends-introduction.png?v=1"
+                      src="/projects/community-gardens/outputs/forres-friends-introduction.png"
                       alt="Forres Friends of Woods and Fields introduction over a site boundary map"
                       width={1684}
                       height={1214}
@@ -581,7 +599,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-8 lg:grid-cols-[1.55fr_0.75fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/participatory-observation.png?v=1"
+                        src="/projects/community-gardens/outputs/participatory-observation.png"
                         alt="Participatory observation collage showing weekly gardening events and open day festival"
                         width={1230}
                         height={692}
@@ -609,7 +627,7 @@ export default async function ProjectPage({
                       Participatory Observation
                     </h3>
                     <Image
-                      src="/projects/community-gardens/outputs/participatory-observation-storyboard.png?v=1"
+                      src="/projects/community-gardens/outputs/participatory-observation-storyboard.png"
                       alt="Participatory observation storyboard mapping time, pains, gains and mood during a gardening session"
                       width={1614}
                       height={1037}
@@ -670,13 +688,13 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="Stage3 Participatory Workshop">
+              <CaseStudySubAccordion id="research-stage-3" title="Stage3 Participatory Workshop">
                 <section
                   className="grid gap-16 bg-white text-[14px] font-normal leading-normal text-black md:text-[16px] xl:text-[18px]"
                   aria-label="Stage 3 participatory workshop"
                 >
                   <Image
-                    src="/projects/community-gardens/outputs/participatory-workshop-bg.png?v=1"
+                    src="/projects/community-gardens/outputs/participatory-workshop-bg.png"
                     alt="Participatory workshop overview with workshop purpose and background photo"
                     width={1684}
                     height={1220}
@@ -698,7 +716,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/questionnaire.png?v=1"
+                        src="/projects/community-gardens/outputs/questionnaire.png"
                         alt="Completed workshop questionnaire sheets with participant summary"
                         width={674}
                         height={540}
@@ -805,7 +823,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/ideal-garden-design.png?v=1"
+                        src="/projects/community-gardens/outputs/ideal-garden-design.png"
                         alt="Ideal garden design workshop sheets and plant cards"
                         width={766}
                         height={952}
@@ -860,7 +878,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/challenges-discussion.png?v=1"
+                        src="/projects/community-gardens/outputs/challenges-discussion.png"
                         alt="Challenges discussion workshop map with challenge categories"
                         width={928}
                         height={664}
@@ -933,7 +951,7 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="Stage4 Target Users">
+              <CaseStudySubAccordion id="research-stage-4" title="Stage4 Target Users">
                 <section
                   aria-label="Stage 4 target users"
                   className="grid gap-16 bg-white text-[14px] font-normal leading-relaxed text-black md:text-[16px] xl:text-[18px]"
@@ -949,7 +967,7 @@ export default async function ProjectPage({
                           <p>Garden centre, 1 West Rd, Forres IV36 2GU</p>
                         </div>
                         <Image
-                          src="/projects/community-gardens/outputs/target-users-interview.png?v=1"
+                          src="/projects/community-gardens/outputs/target-users-interview.png"
                           alt="Interview field photos at Mackenzie and Cruickshank garden centre."
                           width={758}
                           height={641}
@@ -1047,7 +1065,7 @@ export default async function ProjectPage({
                       Persona
                     </h3>
                     <Image
-                      src="/projects/community-gardens/outputs/target-users-persona.png?v=1"
+                      src="/projects/community-gardens/outputs/target-users-persona.png"
                       alt="Persona sketch for Kate, a 26 year old support worker living in Forres."
                       width={2884}
                       height={1400}
@@ -1106,7 +1124,7 @@ export default async function ProjectPage({
                             <th className="p-4" />
                             <td className="p-4">
                               <Image
-                                src="/projects/community-gardens/outputs/target-users-case-study-1.png?v=1"
+                                src="/projects/community-gardens/outputs/target-users-case-study-1.png"
                                 alt="Gardening toolkit for kids with pot, instruction sheet and shop display"
                                 width={368}
                                 height={192}
@@ -1116,7 +1134,7 @@ export default async function ProjectPage({
                             </td>
                             <td className="p-4">
                               <Image
-                                src="/projects/community-gardens/outputs/target-users-case-study-2.png?v=1"
+                                src="/projects/community-gardens/outputs/target-users-case-study-2.png"
                                 alt="Seed packets and vegetable calendar research photos"
                                 width={368}
                                 height={192}
@@ -1126,7 +1144,7 @@ export default async function ProjectPage({
                             </td>
                             <td className="p-4">
                               <Image
-                                src="/projects/community-gardens/outputs/target-users-case-study-3.png?v=1"
+                                src="/projects/community-gardens/outputs/target-users-case-study-3.png"
                                 alt="Grant Park street sign and flower planter photos"
                                 width={368}
                                 height={192}
@@ -1136,7 +1154,7 @@ export default async function ProjectPage({
                             </td>
                             <td className="p-4">
                               <Image
-                                src="/projects/community-gardens/outputs/target-users-case-study-4.png?v=1"
+                                src="/projects/community-gardens/outputs/target-users-case-study-4.png"
                                 alt="Edinburgh farmers market and Grassmarket field research photos"
                                 width={368}
                                 height={192}
@@ -1226,14 +1244,14 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="Stage5 Ideation">
+              <CaseStudySubAccordion id="research-stage-5" title="Stage5 Ideation">
                 <section
                   aria-label="Stage 5 ideation"
                   className="grid gap-16 bg-white text-[14px] font-normal leading-relaxed text-black md:text-[16px] xl:text-[18px]"
                 >
                   <section className="grid gap-8">
                     <Image
-                      src="/projects/community-gardens/outputs/affinity-mapping.png?v=1"
+                      src="/projects/community-gardens/outputs/affinity-mapping.png"
                       alt="Affinity mapping wall with clustered sticky notes for touch points, ways of learning, publicity and pain points."
                       width={1684}
                       height={658}
@@ -1311,7 +1329,7 @@ export default async function ProjectPage({
                           <article className="relative grid gap-6 border-4 border-dashed border-neutral-400 p-6">
                             <div className="grid gap-5 sm:grid-cols-[64px_1fr]">
                               <Image
-                                src="/projects/community-gardens/outputs/concept-1-icon.png?v=1"
+                                src="/projects/community-gardens/outputs/concept-1-icon.png"
                                 alt="Phone icon for app concept"
                                 width={104}
                                 height={126}
@@ -1344,7 +1362,7 @@ export default async function ProjectPage({
                           <article className="relative grid gap-6 border-4 border-dashed border-[#75A723] p-6">
                             <div className="grid gap-5 sm:grid-cols-[64px_1fr]">
                               <Image
-                                src="/projects/community-gardens/outputs/concept-2-icon.png?v=1"
+                                src="/projects/community-gardens/outputs/concept-2-icon.png"
                                 alt="Toolkit icon for physical toolkit concept"
                                 width={124}
                                 height={124}
@@ -1386,7 +1404,7 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="Stage6 Delivery" defaultOpen>
+              <CaseStudySubAccordion id="research-stage-6" title="Stage6 Delivery" defaultOpen>
                 <section
                   aria-label="Stage 6 delivery"
                   className="grid gap-16 bg-white text-[14px] font-normal leading-relaxed text-black md:text-[16px] xl:text-[18px]"
@@ -1439,7 +1457,7 @@ export default async function ProjectPage({
                       Service Blueprint
                     </h3>
                     <Image
-                      src="/projects/community-gardens/outputs/service-blueprint.png?v=1"
+                      src="/projects/community-gardens/outputs/service-blueprint.png"
                       alt="Service blueprint showing phases, evidence, customer actions, interactions and support process for the community garden toolkit service."
                       width={1684}
                       height={966}
@@ -1462,7 +1480,7 @@ export default async function ProjectPage({
                           <div className="grid justify-items-center gap-10">
                             <div className="grid justify-items-center gap-3 text-center">
                               <Image
-                                src="/projects/community-gardens/outputs/touchpoint-toolkits.png?v=1"
+                                src="/projects/community-gardens/outputs/touchpoint-toolkits.png"
                                 alt="Toolkits touchpoint icon"
                                 width={64}
                                 height={64}
@@ -1473,7 +1491,7 @@ export default async function ProjectPage({
                             </div>
                             <div className="grid justify-items-center gap-3 text-center">
                               <Image
-                                src="/projects/community-gardens/outputs/touchpoint-street-sign.png?v=1"
+                                src="/projects/community-gardens/outputs/touchpoint-street-sign.png"
                                 alt="Street Sign touchpoint icon"
                                 width={64}
                                 height={64}
@@ -1504,15 +1522,15 @@ export default async function ProjectPage({
                             {[
                               {
                                 label: "Map",
-                                src: "/projects/community-gardens/outputs/touchpoint-map.png?v=1",
+                                src: "/projects/community-gardens/outputs/touchpoint-map.png",
                               },
                               {
                                 label: "Calendar",
-                                src: "/projects/community-gardens/outputs/touchpoint-calendar.png?v=1",
+                                src: "/projects/community-gardens/outputs/touchpoint-calendar.png",
                               },
                               {
                                 label: "Seeds",
-                                src: "/projects/community-gardens/outputs/touchpoint-seeds.png?v=1",
+                                src: "/projects/community-gardens/outputs/touchpoint-seeds.png",
                               },
                             ].map((touchpoint) => (
                               <div key={touchpoint.label} className="grid grid-cols-[64px_1fr] items-center gap-4">
@@ -1538,7 +1556,7 @@ export default async function ProjectPage({
                         <div className="grid content-start gap-6">
                           <div className="grid grid-cols-[72px_1fr] items-center gap-4">
                             <Image
-                              src="/projects/community-gardens/outputs/touchpoint-ar-games.png?v=1"
+                              src="/projects/community-gardens/outputs/touchpoint-ar-games.png"
                               alt="AR games in special event touchpoint icon"
                               width={64}
                               height={64}
@@ -1562,15 +1580,15 @@ export default async function ProjectPage({
                           {[
                             {
                               label: "Community Garden Organizations",
-                              src: "/projects/community-gardens/outputs/touchpoint-community-garden-organizations.png?v=1",
+                              src: "/projects/community-gardens/outputs/touchpoint-community-garden-organizations.png",
                             },
                             {
                               label: "Volunteers",
-                              src: "/projects/community-gardens/outputs/touchpoint-volunteers.png?v=1",
+                              src: "/projects/community-gardens/outputs/touchpoint-volunteers.png",
                             },
                             {
                               label: "Shop Assistant",
-                              src: "/projects/community-gardens/outputs/touchpoint-shop-assistant.png?v=1",
+                              src: "/projects/community-gardens/outputs/touchpoint-shop-assistant.png",
                             },
                           ].map((touchpoint) => (
                             <div key={touchpoint.label} className="grid grid-cols-[72px_1fr] items-center gap-4">
@@ -1596,7 +1614,7 @@ export default async function ProjectPage({
                     </h3>
                     <div className="grid gap-8 lg:grid-cols-[0.56fr_0.44fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/user-testing-gardening-toolkits.png?v=1"
+                        src="/projects/community-gardens/outputs/user-testing-gardening-toolkits.png"
                         alt="Participants testing the gardening calendar, map and seed bag toolkit."
                         width={908}
                         height={934}
@@ -1662,7 +1680,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-8 lg:grid-cols-[0.56fr_0.44fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/user-testing-street-sign.png?v=1"
+                        src="/projects/community-gardens/outputs/user-testing-street-sign.png"
                         alt="Street sign material iteration from acrylic to wood with waterproof coating, tested beside a rose bed."
                         width={904}
                         height={482}
@@ -1693,7 +1711,7 @@ export default async function ProjectPage({
 
                     <div className="grid gap-8 lg:grid-cols-[0.56fr_0.44fr] lg:items-start">
                       <Image
-                        src="/projects/community-gardens/outputs/user-testing-ar-game.png?v=1"
+                        src="/projects/community-gardens/outputs/user-testing-ar-game.png"
                         alt="AR gardening game user testing with an iPad and Reality Composer scene."
                         width={908}
                         height={516}
@@ -1732,7 +1750,7 @@ export default async function ProjectPage({
                 </section>
               </CaseStudySubAccordion>
 
-              <CaseStudySubAccordion title="REFERENCE">
+              <CaseStudySubAccordion id="research-reference" title="REFERENCE">
                 <section
                   aria-label="References and appendix"
                   className="grid gap-16 bg-white text-[14px] font-normal leading-relaxed text-black md:text-[16px] xl:text-[18px]"
@@ -1783,7 +1801,7 @@ export default async function ProjectPage({
                       Appendix
                     </h3>
                     <Image
-                      src="/projects/community-gardens/outputs/appendix.png?v=1"
+                      src="/projects/community-gardens/outputs/appendix.png"
                       alt="Appendix documents including consent forms and participant information sheets."
                       width={1630}
                       height={573}
@@ -1797,7 +1815,7 @@ export default async function ProjectPage({
 
               <section className="flex justify-center pt-4">
                 <Image
-                  src="/projects/community-gardens/outputs/graduation-display.png?v=1"
+                  src="/projects/community-gardens/outputs/graduation-display.png"
                   alt="Huilin Shen presenting the Community Gardens Forres graduation display."
                   width={424}
                   height={394}
@@ -1810,8 +1828,9 @@ export default async function ProjectPage({
           </ResearchProcessAccordion>
         ) : (
           <section className="grid gap-5">
-            {project.sections.map((section) => (
+            {project.sections.map((section, index) => (
               <section
+                id={`section-${index}`}
                 key={section.title}
                 className="grid gap-4 rounded-lg border border-[#e3d6b5] bg-white p-5 shadow-[0_4px_0_#eadfca] md:grid-cols-[0.34fr_1fr] md:p-7"
               >
@@ -1824,24 +1843,7 @@ export default async function ProjectPage({
           </section>
         )}
 
-        <footer className="grid gap-12 py-12 md:gap-16 md:py-16">
-          <div className="flex items-start justify-center" aria-hidden="true">
-            <div className="flex w-full items-start justify-center">
-              <span className="mt-2 h-px flex-1 border-t-2 border-dotted border-[#b8b0a2]" />
-              {["#F7D6E8", "#f48bb1", "#BFD1C7", "#E8D9A7", "#D9A183", "#AFCAD0", "#AEA7CC"].map((color) => (
-                <span
-                  key={color}
-                  className="mx-3 h-12 w-9 rounded-b-full md:mx-4"
-                  style={{
-                    backgroundColor: color,
-                    clipPath: "polygon(0 0, 100% 0, 50% 100%)",
-                  }}
-                />
-              ))}
-              <span className="mt-2 h-px flex-1 border-t-2 border-dotted border-[#b8b0a2]" />
-            </div>
-          </div>
-
+        <footer className="pb-12 pt-[168px] md:pb-16 md:pt-[200px] lg:pt-52">
           <ProjectFooterNavigation current="community-gardens" />
         </footer>
       </article>

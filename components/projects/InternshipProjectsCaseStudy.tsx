@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { ProjectChapterNavigation } from "./ProjectChapterNavigation";
 import { ExternalLink } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const internshipCopy = {
   hero: {
@@ -60,6 +60,7 @@ const internshipCopy = {
 } as const;
 
 const chapters = [
+  ["Hero", "hero"],
   ["01 · FOTILE", "fotile-range-hood"],
   ["02 · Suntory", "illuminera-suntory"],
 ] as const;
@@ -432,42 +433,11 @@ function FotileProjectChapter() {
 }
 
 export function InternshipProjectsCaseStudy() {
-  const [activeChapter, setActiveChapter] = useState("fotile-range-hood");
-
-  useEffect(() => {
-    const sections = chapters
-      .map(([, id]) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActiveChapter(visible.target.id);
-      },
-      { rootMargin: "-25% 0px -55%", threshold: [0, 0.15, 0.35] },
-    );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="bg-white text-[#0a0a0a]">
-      <nav className="sticky top-4 z-40 mx-auto flex w-max max-w-[calc(100%-2rem)] items-center justify-center gap-1.5 overflow-x-auto rounded-full border border-black/10 bg-white/85 p-1 shadow-sm backdrop-blur-xl" aria-label="Internship projects">
-        {chapters.map(([label, id]) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={`shrink-0 whitespace-nowrap rounded-full px-3 py-2 font-mono text-[9px] font-semibold tracking-[0.02em] transition md:text-[10px] ${
-              activeChapter === id ? "bg-black text-white" : "text-black/38 hover:bg-black/[0.05] hover:text-black/72"
-            }`}
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
+      <ProjectChapterNavigation chapters={chapters} tone="light" accent="#9E2E2D" />
 
-      <header className="relative -mt-16 grid min-h-[calc(60vh-2rem)] overflow-hidden bg-white px-5 pb-20 pt-32 md:px-10">
+      <header id="hero" className="relative grid min-h-[calc(60vh-2rem)] overflow-hidden bg-white px-5 pb-20 pt-32 md:px-10">
         <div className="mx-auto grid min-h-[calc(60vh-10rem)] w-full max-w-[1280px] content-center gap-12">
           <div className="grid max-w-[1080px] gap-7">
             <p className={sectionLabelClass}>{internshipCopy.hero.label}</p>

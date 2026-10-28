@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ProjectChapterNavigation } from "./ProjectChapterNavigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   ChevronLeft,
@@ -17,7 +18,7 @@ const chapters = [
   ["Workflow", "workflow"],
   ["Iteration", "iteration"],
   ["Impact", "impact"],
-];
+] as const;
 
 const principles = [
   {
@@ -99,41 +100,6 @@ const architectureStages = [
     title: "Execute",
     body: "Coordinate tools and services while surfacing only the next relevant interaction.",
     accent: "#74d6ff",
-  },
-];
-
-const publicPipelineSteps = [
-  {
-    title: "Understand",
-    subtitle: "Intent, context, safety",
-    pills: ["Intent classifier", "Clarify loop"],
-    support: {
-      label: "Privacy sandbox",
-      accent: "#34f5a6",
-    },
-  },
-  {
-    title: "Plan",
-    subtitle: "Goals broken into tasks",
-    pills: ["Task graph", "Plan reuse"],
-  },
-  {
-    title: "Coordinate",
-    subtitle: "Adapts as conditions change",
-    pills: ["Scheduler", "Triggers", "Memory tiers"],
-    support: {
-      label: "Memory system",
-      accent: "#9b7cff",
-    },
-  },
-  {
-    title: "Execute",
-    subtitle: "Only the next step shown",
-    pills: ["Expert routing", "Weighted aggregation"],
-    support: {
-      label: "Tool registry",
-      accent: "#74d6ff",
-    },
   },
 ];
 
@@ -423,136 +389,6 @@ function PrincipleCarouselItem({
   );
 }
 
-function PipelineConnector() {
-  return (
-    <div className="grid h-5 place-items-center md:h-6" aria-hidden="true">
-      <div className="relative h-full w-px bg-gradient-to-b from-white/18 via-white/26 to-white/8">
-        <span className="absolute -bottom-0.5 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-white/32" />
-      </div>
-    </div>
-  );
-}
-
-function PublicPipelineDiagram() {
-  return (
-    <div
-      className="relative isolate grid w-full content-center overflow-hidden rounded-[30px] border border-white/[0.08] bg-[#030610]/88 px-4 py-5 shadow-[0_32px_90px_rgba(0,0,0,0.28)] sm:px-6 sm:py-6 md:px-8 lg:px-6 xl:px-8"
-      role="img"
-      aria-label="Simplified intent-first AI pipeline"
-    >
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_44%_38%,rgba(116,214,255,0.08),transparent_36%),radial-gradient(circle_at_78%_70%,rgba(155,124,255,0.07),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-x-[15%] top-0 -z-10 h-24 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.055),transparent_72%)] blur-2xl" />
-
-      <div className="mx-auto grid w-full max-w-[690px]">
-        <div className="grid md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)]">
-          <div className="justify-self-center rounded-full border border-white/[0.12] bg-white/[0.06] px-7 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-white/74">
-            Input
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)]">
-          <PipelineConnector />
-        </div>
-
-        {publicPipelineSteps.map((step, index) => (
-          <div key={step.title}>
-            <div className="grid items-center gap-3 md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)] md:gap-0">
-              <div className="grid gap-2">
-                <div className="rounded-[16px] border border-white/[0.11] bg-[linear-gradient(145deg,rgba(255,255,255,0.075),rgba(255,255,255,0.035))] px-5 py-2.5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_18px_50px_rgba(0,0,0,0.16)]">
-                  <h3 className="text-[17px] font-medium tracking-[-0.02em] text-white/92">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-[13px] leading-relaxed text-white/44 md:text-[14px]">
-                    {step.subtitle}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-2">
-                  {step.pills.map((pill) => (
-                    <span
-                      key={pill}
-                      className="rounded-full border border-white/[0.09] bg-black/24 px-3.5 py-1 font-mono text-[9px] font-medium tracking-[0.03em] text-white/38 md:text-[10px]"
-                    >
-                      {pill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {step.support ? (
-                <>
-                  <div className="hidden items-center md:flex" aria-hidden="true">
-                    <span className="h-px flex-1 border-t border-dashed border-white/16" />
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: step.support.accent }}
-                    />
-                  </div>
-                  <div
-                    className="ml-auto flex w-max max-w-full items-center gap-2.5 rounded-full border px-4 py-1.5 font-mono text-[9px] font-semibold tracking-[0.04em] md:ml-0 md:justify-self-stretch md:px-3 md:text-[10px]"
-                    style={{
-                      color: step.support.accent,
-                      borderColor: `${step.support.accent}48`,
-                      backgroundColor: `${step.support.accent}14`,
-                      boxShadow: `0 0 30px ${step.support.accent}10`,
-                    }}
-                  >
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full shadow-[0_0_10px_currentColor]"
-                      style={{ backgroundColor: step.support.accent }}
-                      aria-hidden="true"
-                    />
-                    {step.support.label}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="hidden md:block" />
-                  <div className="hidden md:block" />
-                </>
-              )}
-            </div>
-
-            {index < publicPipelineSteps.length - 1 ? (
-              <div className="grid md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)]">
-                <PipelineConnector />
-              </div>
-            ) : null}
-          </div>
-        ))}
-
-        <div className="grid md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)]">
-          <PipelineConnector />
-        </div>
-
-        <div className="grid md:grid-cols-[minmax(0,1fr)_42px_minmax(130px,0.5fr)]">
-          <div className="grid grid-cols-2 gap-3">
-            {["Conversational", "UI output"].map((output, index) => (
-              <div
-                key={output}
-                className="rounded-full border px-3 py-2.5 text-center text-[13px] font-medium text-white/82 md:text-[14px]"
-                style={{
-                  borderColor: index === 0 ? "rgba(155,124,255,0.28)" : "rgba(116,214,255,0.28)",
-                  background:
-                    index === 0
-                      ? "rgba(155,124,255,0.09)"
-                      : "rgba(116,214,255,0.09)",
-                  boxShadow:
-                    index === 0
-                      ? "0 0 34px rgba(155,124,255,0.08)"
-                      : "0 0 34px rgba(116,214,255,0.08)",
-                }}
-              >
-                {output}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function WorkflowLoopAnimation() {
   const systemSteps = [
     {
@@ -720,7 +556,6 @@ export function BodyClockCaseStudy() {
   const principleSettleTimerRef = useRef<number | null>(null);
   const principleCarouselIndexRef = useRef(principles.length);
   const [principleCarouselIndex, setPrincipleCarouselIndex] = useState(principles.length);
-  const [activeChapter, setActiveChapter] = useState("hero");
   const [openChallengeIndexes, setOpenChallengeIndexes] = useState<Set<number>>(
     () => new Set(challenges.map((_, index) => index)),
   );
@@ -823,36 +658,8 @@ export function BodyClockCaseStudy() {
   }, []);
 
   useEffect(() => {
-    const sections = chapters
-      .map(([, id]) => document.getElementById(id))
-      .filter((section): section is HTMLElement => section !== null);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible?.target.id) {
-          setActiveChapter(visible.target.id);
-        }
-      },
-      {
-        rootMargin: "-28% 0px -58% 0px",
-        threshold: [0.08, 0.18, 0.32, 0.5],
-      },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
     const video = projectFilmVideoRef.current;
-    const section = document.getElementById("project-film");
-
-    if (!video || !section) {
+    if (!video) {
       return;
     }
 
@@ -872,7 +679,7 @@ export function BodyClockCaseStudy() {
       },
     );
 
-    observer.observe(section);
+    observer.observe(video);
 
     return () => observer.disconnect();
   }, []);
@@ -940,23 +747,9 @@ export function BodyClockCaseStudy() {
         }
       `}</style>
 
-      <nav className="sticky top-4 z-40 mx-auto flex w-max max-w-[calc(100%-2rem)] items-center justify-center gap-1.5 overflow-x-auto rounded-full border border-white/10 bg-black/45 p-1 backdrop-blur-xl">
-        {chapters.map(([label, id]) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={`shrink-0 whitespace-nowrap rounded-full px-2 py-2 font-mono text-[9px] font-semibold tracking-[0.02em] transition md:text-[10px] ${
-              activeChapter === id
-                ? "bg-white/[0.08] text-white shadow-[0_0_20px_rgba(255,255,255,0.08)]"
-                : "text-white/38 hover:bg-white/[0.06] hover:text-white/72"
-            }`}
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
+      <ProjectChapterNavigation chapters={chapters} accent="#74d6ff" />
 
-      <section id="hero" className="relative -mt-16 grid min-h-screen overflow-hidden bg-black px-5 pb-16 pt-28">
+      <section id="hero" className="relative grid min-h-screen overflow-hidden bg-black px-5 pb-16 pt-28">
         <div className="body-clock-reveal relative z-10 mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-[1280px] content-center justify-items-center gap-8 text-center">
           <HeroClock />
           <div className="mt-6 flex flex-wrap justify-center gap-3 md:mt-10">
@@ -1244,7 +1037,22 @@ export function BodyClockCaseStudy() {
           </div>
 
           <div className="relative w-full max-w-[680px] justify-self-start xl:flex xl:h-full xl:max-w-none xl:items-center xl:justify-self-stretch">
-            <PublicPipelineDiagram />
+            <a
+              href="/projects/generative-watch-face/ifs-pipeline.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the full-size IFS Pipeline diagram"
+              className="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            >
+              <Image
+                src="/projects/generative-watch-face/ifs-pipeline.jpg"
+                alt="IFS Pipeline overview showing the resolve, goal, scheduling, execution, memory, privacy and output systems"
+                width={8924}
+                height={7714}
+                sizes="(max-width: 1279px) min(100vw, 680px), 50vw"
+                className="h-auto w-full"
+              />
+            </a>
           </div>
         </div>
       </section>
@@ -1392,7 +1200,7 @@ export function BodyClockCaseStudy() {
         </div>
       </section>
 
-      <section id="impact" className="relative grid min-h-screen place-items-center overflow-hidden bg-[#02040a] px-5 py-28 text-white md:px-10 lg:py-36">
+      <section id="impact" className="relative grid min-h-screen place-items-center overflow-hidden bg-[#02040a] px-5 pb-10 pt-28 text-white md:px-10 lg:pb-12 lg:pt-36">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(52,245,166,0.10),transparent_28%),radial-gradient(circle_at_74%_38%,rgba(155,124,255,0.07),transparent_30%),radial-gradient(circle_at_50%_78%,rgba(52,245,166,0.10),transparent_26%)]" />
         <div className="relative z-10 mx-auto grid w-full max-w-[1280px] gap-20">
           <div className="grid justify-items-center gap-5 text-center">

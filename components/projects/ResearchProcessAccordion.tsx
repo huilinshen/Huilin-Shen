@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-export function ResearchProcessAccordion({ children }: { children?: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+export function ResearchProcessAccordion({ children, id }: { children?: React.ReactNode; id?: string }) {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <section className="grid gap-8" aria-labelledby="research-process-title">
+    <section id={id} className="grid gap-8" aria-labelledby="research-process-title">
       <button
         type="button"
         aria-expanded={isOpen}
