@@ -3,9 +3,9 @@
 import { PortfolioNavigation } from "@/components/PortfolioNavigation";
 import Link from "next/link";
 import Image from "next/image";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react";
 import { introduction, type HomeProject } from "@/data/home-projects";
-import { comfortZoneShift, createGalleryInteraction } from "./gallery-interaction";
+import { createGalleryInteraction } from "./gallery-interaction";
 import { ComingSoonNotice } from "./ComingSoonNotice";
 import styles from "./project-gallery.module.css";
 
@@ -19,107 +19,45 @@ function getDesktopLayout() { return window.matchMedia(desktopQuery).matches; }
 function getServerLayout() { return false; }
 
 export function ProjectGallery({ projects }: { projects: HomeProject[] }) {
-  const homeRef = useRef<HTMLElement>(null);
-  const informationRef = useRef<HTMLElement>(null);
-  const galleryRef = useRef<HTMLElement>(null);
   const boardsRef = useRef<HTMLOListElement>(null);
-  const trackRef = useRef({ x: 0, min: 0, max: 0, slope: 0, width: 0, desktop: false });
-  const dragRef = useRef<{ id: number; startX: number; startY: number; offset: number; moved: boolean } | null>(null);
-  const suppressClickRef = useRef(false);
+  const galleryPositionRef = useRef<"middle" | "front" | "back">("middle");
   const movingUntilRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const desktop = useSyncExternalStore(subscribeToLayout, getDesktopLayout, getServerLayout);
-  const selectedIndex = activeIndex;
   const [interaction] = useState(() => createGalleryInteraction(setActiveIndex));
   useEffect(() => () => interaction.dispose(), [interaction]);
 
-  const moveTrack = useCallback((requested: number, dragging = false) => {
+  useLayoutEffect(() => {
     const boards = boardsRef.current;
     if (!boards) return;
-    const track = trackRef.current;
-    track.x = Math.max(track.min, Math.min(track.max, requested));
-    boards.dataset.dragging = String(dragging);
-    boards.style.transform = `translate3d(${track.x}px, ${-track.x * track.slope}px, 0)`;
-  }, []);
-
-  useLayoutEffect(() => {
-    const home = homeRef.current;
-    const information = informationRef.current;
-    const gallery = galleryRef.current;
-    const boards = boardsRef.current;
-    if (!home || !information || !gallery || !boards) return;
-    const measure = () => {
+    const place = () => {
+      if (!desktop) {
+        boards.style.removeProperty("transform");
+        return;
+      }
       const width = window.innerWidth;
-      const old = trackRef.current;
-      boards.dataset.dragging = "true";
-      boards.style.transform = "none";
-      gallery.style.removeProperty("top");
-      const galleryTop = gallery.getBoundingClientRect().top;
-      const cards = Array.from(boards.querySelectorAll<HTMLElement>("[data-project-index]"))
-        .map((card) => card.getBoundingClientRect());
-      if (!cards.length) return;
-      const css = getComputedStyle(home);
-      const slope = parseFloat(css.getPropertyValue("--diagonal-rise")) / parseFloat(css.getPropertyValue("--default-spacing"));
-      const initial = desktop ? width * 0.06 : 0;
-      let top = galleryTop;
-      if (desktop) {
-        const intro = information.getBoundingClientRect();
-        const clearance = cards.reduce((required, card) => {
-          if (card.left + initial < intro.right + 12 && card.right + initial > intro.left - 12) {
-            return Math.max(required, intro.bottom + 16 - (card.top - galleryTop) + initial * slope);
-          }
-          return required;
-        }, 0);
-        top = Math.max(clearance, (home.querySelector("header")?.getBoundingClientRect().bottom ?? 0) + 12);
-        gallery.style.top = `${top}px`;
-      }
-      const first = cards[0];
-      const last = cards[cards.length - 1];
-      const firstCenter = first.left + first.width / 2;
-      const lastCenter = last.left + last.width / 2;
-      // Keep an end card near the middle at either limit, so dragging cannot expose an empty viewport.
-      const min = Math.min(0, width * 0.45 - lastCenter);
-      const max = Math.max(initial, width * 0.55 - firstCenter);
-      const offset = old.width && old.desktop === desktop ? old.x * width / old.width : initial;
-      trackRef.current = { x: 0, min, max, slope, width, desktop };
-      moveTrack(offset, true);
-      requestAnimationFrame(() => { if (!dragRef.current) boards.dataset.dragging = "false"; });
+      const positions = { middle: width * 0.08, front: width * 0.2, back: -width * 0.08 };
+      const x = positions[galleryPositionRef.current];
+      const slope = 2.15 / 5.7;
+      boards.style.transform = `translate3d(${x}px, ${-x * slope}px, 0)`;
     };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => {
-      window.removeEventListener("resize", measure);
-    };
-  }, [desktop, projects.length, moveTrack]);
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
+  }, [desktop]);
 
   useEffect(() => {
-    if (!desktop || selectedIndex === null || dragRef.current) return;
-    const timer = window.setTimeout(() => {
-      if (dragRef.current) return;
-      const card = boardsRef.current?.querySelector<HTMLElement>(`[data-project-index="${selectedIndex}"]`);
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const shift = comfortZoneShift(rect.left + rect.width / 2, window.innerWidth);
-      if (shift) {
-        movingUntilRef.current = Date.now() + 650;
-        moveTrack(trackRef.current.x + shift);
-      }
-    }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 400);
-    return () => window.clearTimeout(timer);
-  }, [desktop, selectedIndex, moveTrack]);
-
-  useEffect(() => {
-    const gallery = galleryRef.current;
-    if (!gallery) return;
-    const onWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaX) <= Math.max(3, Math.abs(event.deltaY) * 1.2)) return;
-      event.preventDefault();
-      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerWidth : 1;
-      moveTrack(trackRef.current.x - event.deltaX * unit);
-    };
-    gallery.addEventListener("wheel", onWheel, { passive: false });
-    return () => gallery.removeEventListener("wheel", onWheel);
-  }, [moveTrack]);
+    if (!desktop || activeIndex === null) return;
+    const position = activeIndex < 2 ? "front"
+      : activeIndex >= projects.length - 2 ? "back"
+      : activeIndex >= 3 && activeIndex <= 9 ? "middle"
+      : null;
+    if (!position || position === galleryPositionRef.current) return;
+    galleryPositionRef.current = position;
+    const x = window.innerWidth * (position === "front" ? 0.2 : position === "back" ? -0.08 : 0.08);
+    boardsRef.current!.style.transform = `translate3d(${x}px, ${-x * (2.15 / 5.7)}px, 0)`;
+    movingUntilRef.current = Date.now() + 650;
+  }, [activeIndex, desktop, projects.length]);
 
   const textStates = [{ ...introduction, dateRange: null }, ...projects.map((project) => ({
     title: project.title,
@@ -129,47 +67,28 @@ export function ProjectGallery({ projects }: { projects: HomeProject[] }) {
   }))];
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
-    const drag = dragRef.current;
-    if (drag?.id === event.pointerId) {
-      const dx = event.clientX - drag.startX;
-      const dy = event.clientY - drag.startY;
-      if (!drag.moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.15) {
-        drag.moved = true;
-        suppressClickRef.current = true;
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }
-      if (drag.moved) {
-        event.preventDefault();
-        moveTrack(drag.offset + dx, true);
-        return;
-      }
-    }
-    if (event.pointerType === "touch" || !desktop || Date.now() < movingUntilRef.current) return;
+    if (event.pointerType === "touch" || !desktop) return;
     const card = (event.target as Element).closest<HTMLElement>("[data-project-index]");
-    interaction.move(card ? Number(card.dataset.projectIndex) : null, event.clientX, event.clientY);
-  }
-
-  function endDrag(event: PointerEvent<HTMLElement>) {
-    const drag = dragRef.current;
-    if (!drag || drag.id !== event.pointerId) return;
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
-    dragRef.current = null;
-    moveTrack(trackRef.current.x);
-    if (drag.moved) window.setTimeout(() => { suppressClickRef.current = false; }, 100);
+    if (!card) {
+      interaction.move(null, event.clientX, event.clientY);
+      return;
+    }
+    if (Date.now() < movingUntilRef.current) return;
+    interaction.move(Number(card.dataset.projectIndex), event.clientX, event.clientY);
   }
 
   return (
-    <main ref={homeRef} className={styles.home}>
+    <main className={styles.home}>
       <a className={styles.skipLink} href="#selected-projects">Skip to projects</a>
-      <PortfolioNavigation home />
+      <PortfolioNavigation />
 
-      <section ref={informationRef} className={styles.information} aria-label="About Huilin and the selected project">
+      <section className={styles.information} aria-label="Selected project information">
         {textStates.map((copy, index) => {
-          const visible = index === (selectedIndex === null ? 0 : selectedIndex + 1);
+          const visible = index === (activeIndex === null ? 0 : activeIndex + 1);
           return (
             <div key={copy.title} className={styles.textState} data-visible={visible} aria-hidden={!visible}>
-              {index === 0 ? <h1>{copy.title}</h1> : <h2>{copy.title}</h2>}
-              <ul className={styles.keywords} aria-label={index === 0 ? "Background" : "Project keywords"}>
+              <h1>{copy.title}</h1>
+              <ul className={styles.keywords} aria-label="Project keywords">
                 {copy.keywords.map((keyword) => <li key={keyword}>{keyword}</li>)}
               </ul>
               <div className={styles.summary}>
@@ -181,17 +100,10 @@ export function ProjectGallery({ projects }: { projects: HomeProject[] }) {
         })}
       </section>
 
-      <section ref={galleryRef} className={styles.gallery} aria-label="Selected projects"
-        onPointerDown={(event) => {
-          if (event.pointerType === "mouse" && event.button !== 0) return;
-          dragRef.current = { id: event.pointerId, startX: event.clientX, startY: event.clientY, offset: trackRef.current.x, moved: false };
-        }}
+      <section className={styles.gallery} aria-label="Selected projects"
         onPointerMove={handlePointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
         onPointerEnter={() => interaction.enter()}
-        onPointerLeave={() => { if (!dragRef.current?.moved) interaction.leave(); }}
-        onClickCapture={(event) => { if (suppressClickRef.current) { event.preventDefault(); event.stopPropagation(); suppressClickRef.current = false; } }}
+        onPointerLeave={() => interaction.leave()}
         onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interaction.blur(); }}>
         <ol
           ref={boardsRef}
@@ -201,8 +113,8 @@ export function ProjectGallery({ projects }: { projects: HomeProject[] }) {
           style={{ "--project-count": projects.length } as CSSProperties}
         >
           {projects.map((project, index) => {
-            const active = selectedIndex === index;
-            const direction = selectedIndex === null || active ? 0 : index < selectedIndex ? -1 : 1;
+            const active = activeIndex === index;
+            const direction = activeIndex === null || active ? 0 : index < activeIndex ? -1 : 1;
             return (
               <li
                 key={project.id}
@@ -249,6 +161,11 @@ export function ProjectGallery({ projects }: { projects: HomeProject[] }) {
           })}
         </ol>
       </section>
+      <nav className={styles.secondaryNavigation} aria-label="More about Huilin">
+        <Link href="/about">About Me</Link>
+        <a href="/assets/Huilin-Shen-CV.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="https://www.linkedin.com/in/huilinshen" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </nav>
     </main>
   );
 }

@@ -1,14 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { comfortZoneShift, createGalleryInteraction, GALLERY_EXIT_DELAY_MS } from "../components/home/gallery-interaction.ts";
-
-test("the 60% comfort zone moves only to its nearest boundary", () => {
-  assert.equal(comfortZoneShift(500, 1000), 0);
-  assert.equal(comfortZoneShift(195, 1000), 0);
-  assert.equal(comfortZoneShift(805, 1000), 0);
-  assert.equal(comfortZoneShift(180, 1000), 20);
-  assert.equal(comfortZoneShift(830, 1000), -30);
-});
+import { createGalleryInteraction, GALLERY_EXIT_DELAY_MS } from "../components/home/gallery-interaction.ts";
 
 function setup() {
   const selections = [];
@@ -60,6 +52,15 @@ test("crossing a gap retains the project; leaving the gallery resets after a del
   assert.deepEqual(selections, [0]);
   flush();
   assert.deepEqual(selections, [0, null]);
+});
+
+test("resting over empty gallery space restores the introduction", () => {
+  const { interaction, selections, flush } = setup();
+  interaction.move(4, 200, 200);
+  interaction.move(null, 260, 220);
+  assert.deepEqual(selections, [4]);
+  flush();
+  assert.deepEqual(selections, [4, null]);
 });
 
 test("re-entering during the exit delay cancels reset", () => {
