@@ -1,0 +1,126 @@
+.page {
+  background: #fff;
+}
+
+.article {
+  display: grid;
+  width: min(calc(100% - 80px), 1280px);
+  margin-inline: auto;
+  padding-top: 76px;
+  padding-left: 112px;
+  row-gap: 64px;
+}
+
+.article > header:first-child {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.page :global(#hero > section:first-of-type p) {
+  max-width: 760px;
+}
+
+.page :global(.calendar-section) {
+  min-height: 0;
+  gap: 48px;
+  padding: 48px 0 0;
+  border-top: 1px solid #dedede;
+}
+
+.page :global(.calendar-copy) {
+  max-width: 520px;
+}
+
+.page :global(.calendar-copy h2) {
+  font-size: clamp(38px, 4.3vw, 54px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.05em;
+}
+
+.page :global(.calendar-copy p) {
+  color: #4e4e4e;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.page :global(.calendar-stage) {
+  justify-items: center;
+}
+
+.page :global(section[aria-label="Map front"]) {
+  padding-top: 64px;
+  padding-bottom: 0;
+  border-top-color: #dedede;
+}
+
+.page :global(#research) {
+  border-top: 1px solid #dedede;
+}
+
+.page :global(#research > button > span:last-child) {
+  font-size: clamp(38px, 4.3vw, 58px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.05em;
+  text-transform: none;
+}
+
+.page :global(#research [id^="research-"] > button > span:last-child) {
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -.035em;
+  text-transform: none;
+}
+
+.page :global(#research [id^="research-"] > div > div > section) {
+  color: #4e4e4e;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.page :global(#research [id^="research-"] p) {
+  max-width: 780px;
+}
+
+.page :global(#research h3) {
+  font-size: clamp(25px, 2.4vw, 30px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+}
+
+.page :global(#research h4) {
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+@media (min-width: 960px) {
+  .page :global(.calendar-section) {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    column-gap: 8%;
+  }
+}
+
+@media (max-width: 760px) {
+  .article {
+    width: min(calc(100% - 48px), 1280px);
+    padding-top: 55px;
+    padding-left: 24px;
+    row-gap: 56px;
+  }
+}
+
+@media (max-width: 540px) {
+  .article {
+    width: calc(100% - 38px);
+    padding-left: 16px;
+  }
+
+  .page :global(.calendar-copy p),
+  .page :global(#research [id^="research-"] > div > div > section) {
+    font-size: 17px;
+  }
+}

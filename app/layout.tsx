@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Huilin Park",
+  title: "Huilin Shen",
   description: "Selected product, interaction and service design work by Huilin Shen, a London-based Product Designer.",
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any" }],

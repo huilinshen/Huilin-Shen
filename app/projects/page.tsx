@@ -10,7 +10,7 @@ import gardenHero from "@/public/projects/community-gardens/cover.jpg";
 import beyondDesignWorkshop from "@/public/about/beyond-design-workshop.png";
 
 export const metadata: Metadata = {
-  title: "Projects — Huilin Park",
+  title: "Projects — Huilin Shen",
   description: "Selected product, UX, service and industrial design work by Huilin Shen.",
 };
 
@@ -26,7 +26,7 @@ type WorkItem = {
 };
 
 const watch = projects.find((project) => project.slug === "generative-watch-face")!;
-const internship = projects.find((project) => project.slug === "internship-projects")!;
+const internship = projects.find((project) => project.slug === "skyline-ui")!;
 const garden = projects.find((project) => project.slug === "community-gardens")!;
 
 const work: WorkItem[] = [
@@ -47,7 +47,7 @@ const work: WorkItem[] = [
     tags: internship.tags,
     href: internship.href,
     image: internshipHero,
-    imageAlt: "Fotile physical product design from Huilin's internship projects",
+    imageAlt: "FOTILE refrigerated range hood with Skyline UI",
     tone: "internship",
   },
   {
@@ -107,7 +107,7 @@ export default function ProjectsPage() {
 
       <footer className="work-index-footer">
         <span>Four stops, one evolving practice.</span>
-        <Link href="/">Return to Huilin Park <ArrowUpRight size={16} /></Link>
+        <Link href="/">Return to Huilin Shen <ArrowUpRight size={16} /></Link>
       </footer>
     </main>
   );

@@ -25,7 +25,7 @@ function getHomepageHoverTitle(destination: ParkDestination) {
   }
 
   if (destination.id === "project-03") {
-    return "Internship Projects";
+    return "Skyline UI";
   }
 
   return destination.title;

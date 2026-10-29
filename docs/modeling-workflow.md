@@ -1,6 +1,6 @@
-# Huilin Park Modeling Workflow
+# Archived 3D Modeling Workflow
 
-This MVP currently uses code-built placeholder geometry. Replace one piece at a time with Blender exports.
+These notes describe an earlier 3D homepage concept. The current Huilin Shen homepage does not use this scene.
 
 ## Blender scene rules
 

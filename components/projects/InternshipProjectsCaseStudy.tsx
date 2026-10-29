@@ -6,8 +6,8 @@ import { ExternalLink } from "lucide-react";
 
 const internshipCopy = {
   hero: {
-    label: "Internship Projects",
-    title: "Consumer innovation and industrial design",
+    label: "FOTILE / Suntory",
+    title: "Skyline UI",
     summary:
       "Two early-career projects where I worked across user research, product thinking, visual design, industrial design and interface design.",
     metadata: [
@@ -61,8 +61,8 @@ const internshipCopy = {
 
 const chapters = [
   ["Hero", "hero"],
-  ["01 · FOTILE", "fotile-range-hood"],
-  ["02 · Suntory", "illuminera-suntory"],
+  ["FOTILE", "fotile-range-hood"],
+  ["Suntory", "illuminera-suntory"],
 ] as const;
 
 const sectionLabelClass =
@@ -435,7 +435,7 @@ function FotileProjectChapter() {
 export function InternshipProjectsCaseStudy() {
   return (
     <div className="bg-white text-[#0a0a0a]">
-      <ProjectChapterNavigation chapters={chapters} tone="light" accent="#9E2E2D" />
+      <ProjectChapterNavigation chapters={chapters} tone="light" accent="#9E2E2D" numbered={false} />
 
       <header id="hero" className="relative grid min-h-[calc(60vh-2rem)] overflow-hidden bg-white px-5 pb-20 pt-32 md:px-10">
         <div className="mx-auto grid min-h-[calc(60vh-10rem)] w-full max-w-[1280px] content-center gap-12">

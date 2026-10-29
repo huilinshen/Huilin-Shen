@@ -20,7 +20,7 @@ const existingProjects = projects.map((project) => {
         "Body Clock is an AI-powered smartwatch concept that adapts its interface to users’ intentions and daily context.\n\nI led the end-to-end interaction design, making complex AI capabilities intuitive through contextual suggestions, clear feedback and a flexible UI system.\n\nThe prototype secured backing from Huawei’s HQ and European Research Institute, unlocking additional funding for further development.",
     };
   }
-  if (project.slug === "internship-projects") {
+  if (project.slug === "skyline-ui") {
     return {
       ...project,
       cover: "/projects/internship-projects/fotile/fotile-hero.jpg",
@@ -52,7 +52,7 @@ export const caseStudyAvailability: Record<string, boolean> = {
   "range-hood-redesign": false,
   "internship": true,
   "intent-first-experience": false,
-  "calender": false,
+  "calender": true,
   "body-clock": true,
   "freeclips": true,
   "forres-community-garden": true,
@@ -79,15 +79,15 @@ const coverOrder = [
   [
     "internship",
     "Skyline UI",
-    "internship-projects"
-  ],
-  [
-    "intent-first-experience",
-    "Huawei AI Assistant – Celia"
+    "skyline-ui"
   ],
   [
     "calender",
     "Huawei Calendar"
+  ],
+  [
+    "intent-first-experience",
+    "Huawei AI Assistant – Celia"
   ],
   [
     "body-clock",
@@ -179,7 +179,7 @@ export const homeProjects: HomeProject[] = coverOrder.map(([id, name, slug]) => 
       tags: ["Embedded UI Design", "Human–Machine Interaction"],
       summary: "Skyline UI makes airflow and operating status clear on FOTILE’s integrated cooling range hood.\n\nAs a UI Design Intern at Good Matter, I used cool blue light for descending air and warm orange for rising heat; the lighting responds to airflow changes.\n\nThe range hood later received a 2022 iF Design Award for the wider team’s product design.",
       dateRange: "01/2020 – 09/2020",
-      href: existing?.href ?? "/projects/internship-projects",
+      href: existing?.href ?? "/projects/skyline-ui",
       caseStudyAvailable: caseStudyAvailability[id] ?? false,
     };
   }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { getProjectBySlug, projects } from "@/data/projects";
@@ -12,6 +12,7 @@ import { InternshipProjectsCaseStudy } from "@/components/projects/InternshipPro
 import { ProjectFooterNavigation } from "@/components/projects/ProjectFooterNavigation";
 import { ProjectChapterNavigation } from "@/components/projects/ProjectChapterNavigation";
 import { GlobalNavigation } from "@/components/GlobalNavigation";
+import gardenStyles from "./community-garden.module.css";
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -25,16 +26,17 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "internship-projects") redirect("/projects/skyline-ui");
   const project = getProjectBySlug(slug);
 
   if (!project) {
     return {
-      title: "Project not found | Huilin Park",
+      title: "Project not found | Huilin Shen",
     };
   }
 
   return {
-    title: `${project.title} | Huilin Park`,
+    title: `${project.title} | Huilin Shen`,
     description: project.summary,
   };
 }
@@ -45,6 +47,7 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  if (slug === "internship-projects") redirect("/projects/skyline-ui");
   const project = getProjectBySlug(slug);
 
   if (!project) {
@@ -53,17 +56,17 @@ export default async function ProjectPage({
 
   const isBodyClock = project.slug === "generative-watch-face";
   const isCommunityGardens = project.slug === "community-gardens";
-  const isInternshipProjects = project.slug === "internship-projects";
+  const isInternshipProjects = project.slug === "skyline-ui";
   const communityProjectTitleClass =
-    "max-w-5xl text-[38px] font-black leading-tight text-[#75A723] md:text-[52px] xl:text-[64px]";
+    "w-full whitespace-nowrap text-[clamp(19px,5.6vw,78px)] font-normal leading-[0.96] tracking-[-0.065em] text-[#75A723]";
   const communityBodyClass =
-    "text-[18px] font-normal leading-relaxed text-black md:text-[22px] xl:text-[28px]";
+    "text-[17px] font-normal leading-[1.65] text-[#4e4e4e] md:text-[18px]";
   const communityMetaClass =
-    "text-[16px] font-normal leading-relaxed text-neutral-500 md:text-[18px] xl:text-[20px]";
+    "text-[16px] font-normal leading-[1.55] text-neutral-500 md:text-[17px]";
   const communityH1Class =
-    "text-[28px] font-black uppercase leading-tight text-[#75A723] md:text-[34px] xl:text-[40px]";
+    "text-[38px] font-normal leading-[1.08] tracking-[-0.05em] text-[#75A723] md:text-[54px]";
   const communityH3Class =
-    "text-[22px] font-black leading-tight text-black md:text-[26px] xl:text-[30px]";
+    "text-[23px] font-normal leading-[1.22] tracking-[-0.03em] text-black md:text-[28px]";
 
   if (isBodyClock) {
     return (
@@ -95,7 +98,7 @@ export default async function ProjectPage({
 
           <footer className="mx-auto grid w-full max-w-[1440px] bg-white px-5 pb-12 pt-[120px] md:px-8 md:pb-16 md:pt-[152px] lg:px-10 lg:pt-32 xl:px-12">
             <div className="mx-auto w-full max-w-[1280px]">
-              <ProjectFooterNavigation current="internship-projects" />
+              <ProjectFooterNavigation current="skyline-ui" />
             </div>
           </footer>
         </article>
@@ -104,12 +107,12 @@ export default async function ProjectPage({
   }
 
   return (
-    <main className={`min-h-screen ${isCommunityGardens ? "bg-white text-black" : "bg-[#fffaf0] text-[#202018]"}`}>
+    <main className={`min-h-screen ${isCommunityGardens ? `overflow-x-clip bg-white text-black ${gardenStyles.page}` : "bg-[#fffaf0] text-[#202018]"}`}>
       <ProjectChapterNavigation
         tone="light"
         accent={isCommunityGardens ? "#75A723" : project.accent}
         chapters={isCommunityGardens
-          ? [["Hero", "hero"], ["Research", "research"],
+          ? [["Outcome", "hero"], ["Research", "research"],
               ["Desk Research", "research-stage-1", true], ["Interview with Stakeholder", "research-stage-2", true],
               ["Participatory Workshop", "research-stage-3", true], ["Target Users", "research-stage-4", true],
               ["Ideation", "research-stage-5", true], ["Delivery", "research-stage-6", true],
@@ -118,9 +121,9 @@ export default async function ProjectPage({
       />
       <GlobalNavigation />
       <article
-        className={`mx-auto grid w-full gap-12 px-5 pt-8 md:px-8 md:pt-12 lg:px-10 xl:px-12 ${
-          isCommunityGardens ? "max-w-[1440px]" : "max-w-6xl"
-        }`}
+        className={isCommunityGardens
+          ? gardenStyles.article
+          : "mx-auto grid w-full max-w-6xl gap-12 px-5 pt-8 md:px-8 md:pt-12 lg:px-10 xl:px-12"}
       >
         {project.details ? (
           <>
@@ -217,7 +220,7 @@ export default async function ProjectPage({
               </header>
             )}
 
-            <section className="overflow-hidden rounded-lg border border-[#e3d6b5] bg-white shadow-[0_6px_0_#eadfca]">
+            <section className={isCommunityGardens ? "overflow-hidden bg-white" : "overflow-hidden rounded-lg border border-[#e3d6b5] bg-white shadow-[0_6px_0_#eadfca]"}>
               <Image
                 src={project.cover}
                 alt={`${project.title} final product cover`}
@@ -429,7 +432,7 @@ export default async function ProjectPage({
               </div>
               <div>
                 <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#7a6b40]">Entry</p>
-                <p className="mt-2 text-xl font-medium">Park ride in Huilin Park</p>
+                <p className="mt-2 text-xl font-medium">Project page in Huilin Shen</p>
               </div>
               <div>
                 <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#7a6b40]">Next asset</p>
@@ -1843,7 +1846,7 @@ export default async function ProjectPage({
           </section>
         )}
 
-        <footer className="pb-12 pt-[168px] md:pb-16 md:pt-[200px] lg:pt-52">
+        <footer className={isCommunityGardens ? "pb-12 pt-24 md:pb-16 md:pt-28" : "pb-12 pt-[168px] md:pb-16 md:pt-[200px] lg:pt-52"}>
           <ProjectFooterNavigation current="community-gardens" />
         </footer>
       </article>

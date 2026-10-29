@@ -1,4 +1,4 @@
-# Huilin Park model drop zone
+# Archived 3D model drop zone
 
 Put exported `.glb` files here.
 

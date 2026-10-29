@@ -14,7 +14,7 @@ const navigationItems = [
 
 const routeToHomeId: Record<string, string> = {
   "generative-watch-face": "body-clock",
-  "internship-projects": "internship",
+  "skyline-ui": "internship",
   "community-gardens": "forres-community-garden",
 };
 
@@ -22,7 +22,7 @@ export function ProjectFooterNavigation({
   current,
   tone = "light",
 }: {
-  current: "generative-watch-face" | "internship-projects" | "community-gardens" | "freeclips" | "about";
+  current: "generative-watch-face" | "skyline-ui" | "community-gardens" | "calender" | "freeclips" | "about";
   tone?: "light" | "dark";
 }) {
   const currentIndex = navigationItems.findIndex((item) => item.key === (routeToHomeId[current] ?? current));

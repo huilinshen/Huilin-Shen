@@ -8,10 +8,12 @@ export function ProjectChapterNavigation({
   chapters,
   tone = "dark",
   accent,
+  numbered = true,
 }: {
   chapters: readonly Chapter[];
   tone?: "dark" | "light";
   accent: string;
+  numbered?: boolean;
 }) {
   const [activeChapter, setActiveChapter] = useState(chapters[0]?.[1] ?? "");
 
@@ -88,7 +90,7 @@ export function ProjectChapterNavigation({
               }`}
               style={{ color: active ? accent : dark ? "rgba(255,255,255,.8)" : "rgba(0,0,0,.7)" }}
             >
-              {nested ? label : `${String(index + 1).padStart(2, "0")} — ${label}`}
+              {nested || !numbered ? label : `${String(index + 1).padStart(2, "0")} — ${label}`}
             </span>
           </a>
           {index < chapters.length - 1 && (

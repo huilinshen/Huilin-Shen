@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 
 function buildCalendarPages() {
@@ -34,26 +34,62 @@ export function CalendarFlipbook() {
   const [pageIndex, setPageIndex] = useState(0);
   const [outgoingIndex, setOutgoingIndex] = useState<number | null>(null);
   const [isFlipping, setIsFlipping] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasCompletedCycle, setHasCompletedCycle] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const animationTimeoutRef = useRef<number | null>(null);
   const currentPage = pages[pageIndex];
   const outgoingPage = outgoingIndex === null ? null : pages[outgoingIndex];
 
-  const goToNextPage = () => {
-    if (isFlipping) {
-      return;
-    }
-
-    setOutgoingIndex(pageIndex);
-    setPageIndex((index) => (index + 1) % pages.length);
-    window.requestAnimationFrame(() => {
+  const flipToPage = useCallback((fromIndex: number, toIndex: number) => {
+    setOutgoingIndex(fromIndex);
+    setPageIndex(toIndex);
+    if (toIndex === pages.length - 1) setHasCompletedCycle(true);
+    animationFrameRef.current = window.requestAnimationFrame(() => {
       setIsFlipping(true);
-      window.setTimeout(() => {
+      animationTimeoutRef.current = window.setTimeout(() => {
         setOutgoingIndex(null);
         setIsFlipping(false);
+        animationTimeoutRef.current = null;
       }, 980);
     });
+  }, [pages.length]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.35 },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || hasCompletedCycle || pageIndex >= pages.length - 1) return;
+    const delay = pageIndex === 0 ? 2000 : 3000;
+    const timer = window.setTimeout(() => flipToPage(pageIndex, pageIndex + 1), delay);
+    return () => window.clearTimeout(timer);
+  }, [flipToPage, hasCompletedCycle, isVisible, pageIndex, pages.length]);
+
+  useEffect(() => () => {
+    if (animationFrameRef.current !== null) window.cancelAnimationFrame(animationFrameRef.current);
+    if (animationTimeoutRef.current !== null) window.clearTimeout(animationTimeoutRef.current);
+  }, []);
+
+  const goToNextPage = () => {
+    if (isFlipping) return;
+    flipToPage(pageIndex, (pageIndex + 1) % pages.length);
   };
 
   const resetCalendar = () => {
+    setHasCompletedCycle(false);
+    if (animationFrameRef.current !== null) window.cancelAnimationFrame(animationFrameRef.current);
+    if (animationTimeoutRef.current !== null) window.clearTimeout(animationTimeoutRef.current);
+    animationFrameRef.current = null;
+    animationTimeoutRef.current = null;
     setOutgoingIndex(null);
     setIsFlipping(false);
     setPageIndex(0);
@@ -73,7 +109,7 @@ export function CalendarFlipbook() {
         </p>
       </div>
 
-      <div className="calendar-stage">
+      <div className="calendar-stage" ref={stageRef}>
         <button
           className="calendar-flipbook"
           type="button"
