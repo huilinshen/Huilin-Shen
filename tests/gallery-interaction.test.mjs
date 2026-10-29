@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createGalleryInteraction, GALLERY_EXIT_DELAY_MS } from "../components/home/gallery-interaction.ts";
+import { comfortZoneShift, createGalleryInteraction, GALLERY_EXIT_DELAY_MS } from "../components/home/gallery-interaction.ts";
+
+test("the 60% comfort zone moves only to its nearest boundary", () => {
+  assert.equal(comfortZoneShift(500, 1000), 0);
+  assert.equal(comfortZoneShift(195, 1000), 0);
+  assert.equal(comfortZoneShift(805, 1000), 0);
+  assert.equal(comfortZoneShift(180, 1000), 20);
+  assert.equal(comfortZoneShift(830, 1000), -30);
+});
 
 function setup() {
   const selections = [];

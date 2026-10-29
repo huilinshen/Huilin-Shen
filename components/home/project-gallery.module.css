@@ -68,7 +68,7 @@
    that clearance also accommodates the active cover's upward lift. */
 .summary { display: grid; gap: 1.2em; }
 .textState .projectDate { margin-top: 0.9em; }
-.gallery { margin-top: -30px; }
+.gallery { margin-top: -30px; overflow: hidden; touch-action: pan-y; }
 .galleryHeading { display: none; }
 .boards {
   position: relative;
@@ -78,6 +78,13 @@
   padding: 0;
   margin: 0;
   list-style: none;
+  transition: transform 560ms cubic-bezier(0.22, 0.68, 0.25, 1);
+  will-change: transform;
+}
+.boards[data-dragging="true"] { transition: none; }
+@media (min-width: 1100px) and (hover: hover) and (pointer: fine) {
+  .home { position: relative; height: 100svh; min-height: 0; overflow: hidden; padding-bottom: 0; }
+  .gallery { position: absolute; right: 0; top: 38vh; bottom: 0; left: 0; margin: 0; }
 }
 .item {
   position: absolute;
@@ -128,29 +135,30 @@
   border: 0;
 }
 .skipLink:focus { position: absolute; z-index: 100; top: 16px; left: 24px; padding: 12px; background: #fff; color: #111; }
-/* Touch and narrow layouts keep the image-only covers in a simple grid. */
+/* The same diagonal track remains swipeable on narrower and touch screens. */
 @media (max-width: 1099px), (hover: none), (pointer: coarse) {
+  .home { --card-width: clamp(230px, 56vw, 370px); --default-spacing: 36vw; --diagonal-rise: 5.5vw; --lift-distance: 0px; }
   .information { width: min(760px, calc(100% - var(--page-inset) * 2)); }
   .textState { display: none; }
   .textState:first-child { display: block; opacity: 1; visibility: visible; }
   .textState h1 { font-size: clamp(40px, 6vw, 64px); }
   .textState p { font-size: 17px; line-height: 1.5; }
   .keywords { justify-content: flex-start; column-gap: 30px; font-size: 15px; }
-  .gallery { margin: 64px var(--page-inset) 60px; }
-  .boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; height: auto; min-width: 0; }
-  .item { position: static; width: auto; transform: none; pointer-events: auto; }
-  .card { transform: none; background: transparent; box-shadow: none; }
+  .gallery { height: clamp(390px, 63svh, 620px); margin: 64px 0 60px; }
+  .boards { height: 100%; }
+  .item { left: var(--page-inset); pointer-events: none; }
+  .card { box-shadow: none; }
   .item[data-active="true"] .card { box-shadow: none; }
 }
 @media (max-width: 700px) {
   .information { margin-top: 42px; }
   .keywords { gap: 8px 18px; margin: 22px 0; font-size: 13px; }
   .textState p { font-size: 16px; }
-  .boards { grid-template-columns: 1fr; gap: 38px; }
-  .gallery { margin-top: 48px; }
+  .home { --card-width: 70vw; --default-spacing: 42vw; --diagonal-rise: 3vw; }
+  .gallery { margin-top: 48px; height: clamp(350px, 58svh, 520px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .item, .card, .textState, .comingSoon { transition: none; }
+  .item, .card, .textState, .comingSoon, .boards { transition: none; }
 }
 
 .cover img { object-fit: contain; }

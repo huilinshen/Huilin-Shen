@@ -1,4 +1,14 @@
 export const GALLERY_EXIT_DELAY_MS = 180;
+export const COMFORT_ZONE_START = 0.2;
+export const COMFORT_ZONE_END = 0.8;
+
+export function comfortZoneShift(center: number, viewportWidth: number, threshold = 8) {
+  const left = viewportWidth * COMFORT_ZONE_START;
+  const right = viewportWidth * COMFORT_ZONE_END;
+  if (center < left - threshold) return left - center;
+  if (center > right + threshold) return right - center;
+  return 0;
+}
 
 type Scheduler = (callback: () => void, delay: number) => ReturnType<typeof setTimeout>;
 
