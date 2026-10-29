@@ -1,0 +1,5 @@
+@media (max-width: 1023px) {
+  .page :global(nav[aria-label="Project sections"] a > span:last-child) {
+    display: none;
+  }
+}

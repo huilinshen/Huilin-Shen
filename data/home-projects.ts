@@ -54,7 +54,7 @@ export const caseStudyAvailability: Record<string, boolean> = {
   "intent-first-experience": false,
   "calender": false,
   "body-clock": true,
-  "freeclips": false,
+  "freeclips": true,
   "forres-community-garden": true,
   "mycomap": false,
   "who-am-i": false,
