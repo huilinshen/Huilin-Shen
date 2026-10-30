@@ -51,7 +51,7 @@ export const caseStudyAvailability: Record<string, boolean> = {
   "vr-medical": false,
   "range-hood-redesign": false,
   "internship": true,
-  "intent-first-experience": false,
+  "intent-first-experience": true,
   "calender": true,
   "body-clock": true,
   "freeclips": true,

@@ -22,7 +22,7 @@ export function ProjectFooterNavigation({
   current,
   tone = "light",
 }: {
-  current: "generative-watch-face" | "skyline-ui" | "community-gardens" | "calender" | "freeclips" | "about";
+  current: "generative-watch-face" | "skyline-ui" | "community-gardens" | "calender" | "intent-first-experience" | "freeclips" | "about";
   tone?: "light" | "dark";
 }) {
   const currentIndex = navigationItems.findIndex((item) => item.key === (routeToHomeId[current] ?? current));
