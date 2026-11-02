@@ -7,9 +7,10 @@ type CaseStudySubAccordionProps = {
   children: ReactNode;
   defaultOpen?: boolean;
   id?: string;
+  accent?: string;
 };
 
-export function CaseStudySubAccordion({ title, children, defaultOpen = false, id }: CaseStudySubAccordionProps) {
+export function CaseStudySubAccordion({ title, children, defaultOpen = false, id, accent = "#75A723" }: CaseStudySubAccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentId = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
@@ -19,7 +20,8 @@ export function CaseStudySubAccordion({ title, children, defaultOpen = false, id
         type="button"
         aria-expanded={isOpen}
         aria-controls={`${contentId}-content`}
-        className="flex w-full items-center gap-4 text-left text-[#75A723] transition-opacity duration-200 hover:opacity-75"
+        className="flex w-full items-center gap-4 text-left transition-opacity duration-200 hover:opacity-75"
+        style={{ color: accent }}
         onClick={() => setIsOpen((current) => !current)}
       >
         <svg

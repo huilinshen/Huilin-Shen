@@ -1,0 +1,28 @@
+// Transcribed from MycoMap frame 29 (228:2755); original bibliography retained.
+export const references = [
+  "Ardoin, N.M., Castrechini, S., Hofstedt, M.K., 2013. Youth–community–university partnerships and sense of place: two case studies of youth participatory action research. Child. Geogr. 12 (4), 479–496.",
+  "Bassiouni, D.H. and Hackley, C. (2016), \"Video games and young children’s evolving sense of identity: a qualitative study\", Young Consumers, 17(2), pp. 127-142. https://doi.org/10.1108/YC-08-2015-00551.",
+  "British Trust for Ornithology. (n.d.). Registered Charity Number 216652 (England & Wales), SC039193 (Scotland). BirdTrack. [Online] Available from: https://www.bto.org/our-science/projects/birdtrack [Accessed 6 March 2024].",
+  "Chin, C., Osborne, J., 2010. Supporting argumentation through students' questions: case studies in science classrooms. J. Learn. Sci. 19 (2), 230–284.",
+  "Dahlberg, A., Genney, D. R. & Heilmann-Clausen, J. (2010). Developing a comprehensive strategy for fungal conservation in Europe: current status and future needs. Fungal Ecology, 3(2), pp.50-64. Available online.",
+  "Gray, P. (2012) ‘The many benefits, for kids, of playing video games’, Psychology Today, 7.",
+  "Harris, M.J. (2018) Color theory and its applications in marketing as it relates to color psychology. Ball State University.",
+  "Hawksworth, D.L. (2012). Global species numbers of fungi: are tropical studies and molecular approaches contributing to a more robust estimate? Biodiversity and Conservation, 21(9), pp.2425-2433. Available online.",
+  "Heilmann-Clausen, J., Bruun, H.H., Ejrnæs, R., Frøslev, T.G., Læssøe, T. and Petersen, J.H. (2019). How citizen science boosted primary knowledge on fungal biodiversity in Denmark. Biological Conservation, [online] 237, pp.366–372. doi:https://doi.org/10.1016/j.biocon.2019.07.008. [Accessed 6 March 2024].",
+  "Holden, L. (2003) The fungi name trail: a key to commoner fungi.",
+  "Junbo. (2023, May 26). How do you take a picture of a mushroom? [Online] Available from: http://www.mycopedia.top/blog.php?id=32 [Accessed 6 March 2024].",
+  "Kim, K. et al. (2024) ‘Exploring the relevance of a psychology-based resilience app (JoyPopTM) for Indigenous youth’, Child Abuse & Neglect, 148, p. 106343.",
+  "Motuihe Trust. (2019). Fungi Citizen Science Project. [Online] Available from: https://www.motuihe.org.nz/about-the-island/biodiversity/fungi-citizen-science-project/ [Accessed 6 March 2024].",
+  "Mushroom Musume by MortallyMoonstruckGames, Autumnotopia, Minamiz, BearLovingNerd, Zaozoruzhna (no date). https://mortallymoonstruckgames.itch.io/mushroom-musume.",
+  "National Geographic Society. (© 1996 - 2024). National Geographic Society is a 501(c)(3) organization. Bioblitz [Online] Available from: https://education.nationalgeographic.org/resource/bioblitz-citizen-science/ [Accessed 6 March 2024].",
+  "Nintendo (2018). Poké Ball™ Plus. Available at: https://media.nintendo.com/pokeballplus/ [Accessed: 20/02/2024].",
+  "Nintendo of America (2018). Pokémon: Let’s Go! - Play with Pokémon GO & Poké Ball Plus - Nintendo Switch. https://www.youtube.com/watch?v=1GrsVmwwPAg.",
+  "Pocock, M.J.O., Chapman, D.S., Sheppard and Roy, H.E. (2014). Sepa choosingandusingcitizenscience interactive 4web final amended blue1. [online] Available at: https://www.ceh.ac.uk/sites/default/files/sepa_choosingandusingcitizenscience_interactive_4web_final_amended-blue1.pdf.",
+  "Royal Society for the Protection of Birds (RSPB). (n.d.). Big Garden Birdwatch. Available from: https://www.rspb.org.uk/ [Accessed 6 March 2024].",
+  "Scotland's Nature Agency. (2020). Scotland is internationally important for the brightly coloured fungi, including the hazel gloves fungus and tooth fungi. [Online] Available from: https://www.nature.scot/plants-animals-and-fungi/fungi#:~:text=Scotland%20is%20internationally%20important%20for%20the%20brightly%20coloured,including%20the%20hazel%20gloves%20fungus%20and%20tooth%20fungi [Accessed 6 March 2024].",
+  "Sheehan, B. (2017). Mushroom Citizen Science in USA: From Species Lists to Mycofloras 2.0. [online] Available at: https://fundis.org/images/PDF/SHEEHAN_Citizen-Science_Fungi-Mag_Spring-2017.pdf [Accessed 20 Feb. 2024].",
+  "Sheehan, B., Stevenson, R. and Schwartz, J. (2021). Crowdsourcing Fungal Biodiversity: Approaches and standards used by an all-volunteer community science project. Biodiversity Information Science and Standards, 5(e74225). doi:https://doi.org/10.3897/biss.5.74225.",
+  "Trautmann, N.M., Shirk, J.L., Fee, J., Krasny, M.E., 2012. Who poses the question? Using citizen science to help K-12 teachers meet the mandate for inquiry. In: Dickinson, J., Bonney, R. (Eds.), Citizen Science: Public Participation in Environmental Research. Comstock Publishing Associates, Ithaca, NY, pp. 179–190.",
+  "Walker, R., Schratz, B, & Egg, P. (2008). Seeing beyond violence: Visual research applied to policy and practice. In P. Thomson (Ed.), Doing visual research with children and young people (pp. 164-174). New York: Routledge.",
+  "Wang, X.-W., Liu, S.-L., & Zhou, L.-W. (2021). Citizen Science Initiative in Taxonomy of Macrofungi in China 1.0. Mycosystema, 40(4), pp.844-850. doi:10.13346/j.mycosystema.200283."
+];

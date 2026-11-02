@@ -1,0 +1,206 @@
+{
+  "6": {
+    "height": 566,
+    "items": [
+      {
+        "id": "6:imgIPhone1415ProMax94",
+        "left": 58,
+        "top": 0,
+        "w": 129,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax98",
+        "left": 194,
+        "top": 0,
+        "w": 129,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax1071",
+        "left": 562,
+        "top": 0,
+        "w": 128,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax109",
+        "left": 698,
+        "top": 0,
+        "w": 127,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax110",
+        "left": 833,
+        "top": 0,
+        "w": 128,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax111",
+        "left": 968,
+        "top": 0,
+        "w": 129,
+        "h": 278
+      },
+      {
+        "id": "6:imgIPhone1415ProMax1081",
+        "left": 968,
+        "top": 286,
+        "w": 129,
+        "h": 278
+      },
+      {
+        "id": "6:imgIPhone1415ProMax1001",
+        "left": 58,
+        "top": 287,
+        "w": 129,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax1011",
+        "left": 194,
+        "top": 287,
+        "w": 129,
+        "h": 279
+      },
+      {
+        "id": "6:imgIPhone1415ProMax112",
+        "left": 562,
+        "top": 287,
+        "w": 128,
+        "h": 278
+      },
+      {
+        "id": "6:imgIPhone1415ProMax113",
+        "left": 698,
+        "top": 287,
+        "w": 127,
+        "h": 278
+      },
+      {
+        "id": "6:imgIPhone1415ProMax114",
+        "left": 833,
+        "top": 287,
+        "w": 128,
+        "h": 278
+      },
+      {
+        "id": "6:imgImage611",
+        "left": 339,
+        "top": 140,
+        "w": 207,
+        "h": 243
+      }
+    ]
+  },
+  "7": {
+    "height": 767,
+    "items": [
+      {
+        "id": "7:imgIPhone1415ProMax80",
+        "left": 409,
+        "top": 0,
+        "w": 168,
+        "h": 366
+      },
+      {
+        "id": "7:imgIPhone1415ProMax81",
+        "left": 591,
+        "top": 0,
+        "w": 168,
+        "h": 366
+      },
+      {
+        "id": "7:imgIPhone1415ProMax85",
+        "left": 772,
+        "top": 0,
+        "w": 169,
+        "h": 366
+      },
+      {
+        "id": "7:imgIPhone1415ProMax86",
+        "left": 954,
+        "top": 0,
+        "w": 169,
+        "h": 366
+      },
+      {
+        "id": "7:imgIPhone1415ProMax103",
+        "left": 409,
+        "top": 401,
+        "w": 168,
+        "h": 363
+      },
+      {
+        "id": "7:imgIPhone1415ProMax82",
+        "left": 591,
+        "top": 401,
+        "w": 168,
+        "h": 363
+      },
+      {
+        "id": "7:imgIPhone1415ProMax95",
+        "left": 772,
+        "top": 401,
+        "w": 169,
+        "h": 366
+      },
+      {
+        "id": "7:imgIPhone1415ProMax84",
+        "left": 954,
+        "top": 401,
+        "w": 169,
+        "h": 366
+      }
+    ]
+  },
+  "8": {
+    "height": 345,
+    "items": [
+      {
+        "id": "8:imgIPhone1415ProMax1061",
+        "left": 58,
+        "top": 0,
+        "w": 159,
+        "h": 344.623
+      },
+      {
+        "id": "8:imgIPhone1415ProMax102",
+        "left": 226,
+        "top": 0,
+        "w": 159,
+        "h": 344
+      },
+      {
+        "id": "8:imgIPhone1415ProMax105",
+        "left": 394,
+        "top": 0,
+        "w": 158,
+        "h": 344
+      },
+      {
+        "id": "8:imgIPhone1415ProMax146",
+        "left": 595,
+        "top": 0,
+        "w": 158,
+        "h": 343
+      },
+      {
+        "id": "8:imgIPhone1415ProMax104",
+        "left": 763,
+        "top": 0,
+        "w": 158,
+        "h": 343
+      },
+      {
+        "id": "8:imgIPhone1415ProMax162",
+        "left": 930,
+        "top": 0,
+        "w": 159,
+        "h": 343
+      }
+    ]
+  }
+}

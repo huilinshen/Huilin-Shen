@@ -56,7 +56,7 @@ export const caseStudyAvailability: Record<string, boolean> = {
   "body-clock": true,
   "freeclips": true,
   "forres-community-garden": true,
-  "mycomap": false,
+  "mycomap": true,
   "who-am-i": false,
   "airport": false,
   "the-venison-restaurant": false
@@ -226,7 +226,7 @@ export const homeProjects: HomeProject[] = coverOrder.map(([id, name, slug]) => 
       cover: `/projects/home-covers/${id}.png`,
       tags: ["Mobile Game Design", "Visual & UI Design"],
       summary: "MycoMap is a citizen science game that invites teenagers to explore the Dava Way and contribute environmental data.\n\nAs the team’s Visual and UI Designer, I translated research into the game’s visual identity and mobile interface.\n\nLocation-based exploration, mushroom identification and challenges bring local nature into a playful, intuitive experience.",
-      dateRange: "03/2024 – 05/2024",
+      dateRange: "02/2024 – 05/2024",
       href: `/projects/${id}`,
       caseStudyAvailable: caseStudyAvailability[id] ?? false,
     };
